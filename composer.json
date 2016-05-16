@@ -1,0 +1,11 @@
+{
+    "name": "mgn/safecrow-sdk",
+    "description": "SDK for safecrow API",
+    "authors": [
+        {
+            "name": "Aleksey Vidanov",
+            "email": "aleksey.vidanov@mgnexus.ru"
+        }
+    ],
+    "require": {}
+}
