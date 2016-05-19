@@ -1,0 +1,7 @@
+<?
+namespace Safecrow;
+
+class Users
+{
+    
+}
