@@ -23,8 +23,7 @@ class App
     private
         $key,
         $secret,
-        $host,
-        $user
+        $host
     ;
     
     /**
@@ -49,7 +48,7 @@ class App
     
     public function getSecret()
     {
-        return $this->secret;
+        return hash("sha256", $this->key.$this->secret.date('c'));
     }
     
     public function getHost()

@@ -2,35 +2,51 @@
 namespace Safecrow\Tests;
 
 use Safecrow\App;
+use Safecrow\Config;
 
 class AppTest extends \PHPUnit_Framework_TestCase
 {
     private static 
-        $key = "b9598ffa-f905-4908-92b1-90e602baa2b2",
-        $secret = "a6420c86bdd9fe871315210e13eed817fc88de887b9ebe953edfae46174c9434",
-        
         $dev = "http://dev.safecrow.ru/api/v1",
         $prod = "https://www.safecrow.ru/api/v1"
     ;
     
-    public function testCreateAppInstance()
+    /**
+     * @test
+     */
+    public function createDevApp()
     {
-        //Test dev 
-        $app = new App(self::$key, self::$secret, true);
+        $app = new App(Config::API_KEY, Config::API_SECRET, true);
         
-        $this->assertEquals(self::$key, $app->getKey());
-        $this->assertEquals(self::$secret, $app->getSecret());
         $this->assertEquals(self::$dev, $app->getHost());
-        
-        //Test prod
-        $app = new App(self::$key, self::$secret);
-        
+    }
+    
+    /**
+     * @test
+     */
+    public function createProdApp()
+    {
+        $app = new App(Config::API_KEY, Config::API_SECRET);
         $this->assertEquals(self::$prod, $app->getHost());
     }
     
+    /**
+     * @test
+     */
+    public function checkState()
+    {
+        $app = new App(Config::API_KEY, Config::API_SECRET, true);
+        
+        $this->assertEquals(Config::API_KEY, $app->getKey());
+        $this->assertEquals(hash("sha256", (Config::API_KEY.Config::API_SECRET.date('c'))), $app->getSecret());
+    }
+    
+    /**
+     * @test
+     */
     public function testAllowedFiles()
     {
-        $app = new App(self::$key, self::$secret, true);
+        $app = new App(Config::API_KEY, Config::API_SECRET, true);
         
         $this->assertTrue($app->IsAllowedFileType("text/plain"));
         $this->assertFalse($app->IsAllowedFileType("text/xml"));
