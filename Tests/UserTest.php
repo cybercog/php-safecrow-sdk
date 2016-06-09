@@ -8,6 +8,7 @@ use Safecrow\Exceptions\RegistrationException;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use Safecrow\Config;
 
 class UserTest extends \PHPUnit_Framework_TestCase
 {
@@ -66,7 +67,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function regUserWithPhone()
     {
-        $user = $this->users->reg([
+        $user = $this->app->getUsers()->reg([
             'name' => self::$userName,
             'phone' => self::$userPhone,
             'accepts_conditions' => true
@@ -88,8 +89,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function regUserWithoutEmailAndPhone()
     {
         $this->expectException(RegistrationException::class);
-        $this->users->reg([
-            'accepts_conditions' => true
+        $this->use$this->app->getUsers()           'accepts_conditions' => true
         ]);
     }
     
@@ -99,7 +99,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function regUserWithoutReqFields()
     {
         $this->expectException(RegistrationException::class);
-        $this->users->reg([
+        $this->app->getUsers()->reg([
             'name' => self::$userName
         ]);
     }
@@ -109,7 +109,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function authUnsuccess()
     {
-        $res = $this->users->auth(1);
+        $res = $this->app->getUsers()->auth(1);
         $this->assertArrayHasKey("errors", $res);
     }
     
@@ -118,8 +118,16 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function authSuccess()
     {
-        $res = $this->users->auth(406);
+        $res = $this->app->getUsers()->auth(406);
         $this->assertArrayHasKey("access_token",$res);
+    }
+    
+    /**
+     * test
+     */
+    public function getUserAccessToken()
+    {
+        $this->assertEquals($_SERVER['safecrow_access_token'], $this->app->getUsers()->getUserToken(406));
     }
     
     /**
@@ -127,7 +135,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function findUserByPhone()
     {
-        $user = $this->users->getByPhone("89999216803");
+        $user = $this->app->getUsers()->getByPhone("89999216803");
         self::$logger->info(json_encode([
             'method' => __METHOD__,
             'data' => $user,
@@ -140,7 +148,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function findUserByEmail()
     {
-        $user = $this->users->getByEmail("test2220@test.ru");
+        $user = $this->app->getUsers()->getByEmail("test2220@test.ru");
         self::$logger->info(json_encode([
             'method' => __METHOD__,
             'data' => $user,
@@ -153,7 +161,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function searchUserByEmptyEmail()
     {
-        $user = $this->users->getByEmail("");
+        $user = $this->app->getUsers()->getByEmail("");
         $this->assertFalse($user);
     }
     
@@ -162,7 +170,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function searchUserByEmptyPhone()
     {
-        $user = $this->users->getByPhone("");
+        $user = $this->app->getUsers()->getByPhone("");
         $this->assertFalse($user);
     }
     
@@ -171,7 +179,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function searchUserByIncorrectEmail()
     {
-        $user = $this->users->getByEmail("incorrect_email");
+        $user = $this->app->getUsers()->getByEmail("incorrect_email");
         $this->assertFalse($user);
     }
     
@@ -180,15 +188,28 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function searchUserByEmailFail()
     {
-        $user = $this->users->getByEmail("durov@vk.com");
+        $user = $this->app->getUsers()->getByEmail("durov@vk.com");
         
         $this->assertArrayHasKey("errors", $user);
     }
     
+    /**
+     * @test
+     */
     public function searchUserByPhoneFail()
     {
-        $user->$this->users->getByPhone("19001234567");
+        $user = $this->app->getUsers()->getByPhone("19001234567");
         
         $this->assertArrayHasKey("errors", $user);
+    }
+    
+    /**
+     * @test
+     */
+    public function getCurrentUser()
+    {
+        $user = $this->app->getUsers()->getCurrent();
+        
+        $this->assertNotEmpty($user);
     }
 }

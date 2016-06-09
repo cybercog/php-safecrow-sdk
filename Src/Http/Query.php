@@ -30,10 +30,9 @@ class Query
      * @param string $method
      * @param string $url
      */
-    public function __construct(App $app, $method, $url)
+    public function __construct($method, $url)
     {
-        $this->app = $app;
-        $this->sUrl =  $app->getHost()."/".trim($url, "/");
+        $this->sUrl =  $url;
         $this->sMethod = strtoupper($method);
     }
     
@@ -112,10 +111,6 @@ class Query
      */
     public function setPostData(array $arPostData)
     {
-        $arPostData['api_key'] = $this->app->getKey();
-        $arPostData['secret'] = $this->app->getSecret();
-        $arPostData['request_time'] = date('c');
-        
         $this->sPostData = $arPostData;
     }
     

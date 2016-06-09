@@ -1,7 +1,6 @@
 <?
 namespace Safecrow\Exceptions;
 
-class AuthException extends \Exception
+class AuthException extends SafecrowException
 {
-    
 }

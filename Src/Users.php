@@ -1,18 +1,20 @@
-<?
+<?php
 namespace Safecrow;
 
 use Safecrow\Exceptions\RegistrationException;
-use Safecrow\Http\Query;
 use Safecrow\Exceptions\AuthException;
+use Safecrow\Http\Client;
 
 class Users
 {
     private 
-        $app;
+        $client,
+        $iTokenLastUpdate
+    ;
     
-    public function __construct(App $app)
+    public function __construct(Client $client)
     {
-        $this->app = $app;
+        $this->client = $client;
     }
     
     /**
@@ -24,12 +26,9 @@ class Users
     public function reg(array $params)
     {
         $this->validate($params);
+        $res = $this->getClient()->post("/sessions/register_user", $params);
         
-        $query = new Query($this->app, "POST", "/sessions/register_user");
-        $query->setPostData($params);
-        
-        $res = $query->exec();
-        return $query->isSuccess() ? $res['user'] : $res;
+        return $res['user'] ?: $res;
     }
     
     /**
@@ -44,13 +43,11 @@ class Users
             throw new AuthException("Некорректный id пользователя");
         }
         
-        $query = new Query($this->app, "POST", "/sessions/auth");
-        $query->setPostData(['user_id' => (int)$id]);
+        $res = $this->getClient()->post("/sessions/auth", array('user_id' => (int)$id));
         
-        $res = $query->exec();
-        
-        if($query->isSuccess()) {
-            $_SESSION['safecrow_access_token'] = $res['access_token'];
+        if(!empty($res['access_token'])) {
+            $this->iTokenLastUpdate = time();
+            $_SERVER["safecrow_access_token"] = $res['access_token'];
         }
         
         return $res;
@@ -68,11 +65,9 @@ class Users
             return false;
         }
         
-        $query = new Query($this->app, "POST", "/sessions/find_user");
-        $query->setPostData(['email' => $email]);
+        $res = $this->getClient()->post("/sessions/find_user", array('email' => $email));
         
-        $res = $query->exec();
-        return $query->isSuccess() ? $res['user'] : $res;
+        return $res['user'] ?: $res;
     }
     
     /**
@@ -87,11 +82,27 @@ class Users
             return false;
         }
         
-        $query = new Query($this->app, "POST", "/sessions/find_user");
-        $query->setPostData(['phone' => $phone]);
-        
-        $res = $query->exec();
-        return $query->isSuccess() ? $res['user'] : $res;
+        $res = $this->getClient()->post("/sessions/find_user", array('phone' => $phone));
+
+        return $res['user'] ?: $res;
+    }
+    
+    public function getUserToken($userId)
+    {
+        if(!(int)$userId) {
+            return false;
+        }
+    
+        if(time() - Config::USER_TOKEN_LIFETIME - $this->iTokenLastUpdate <= 0) {
+            $res = $this->auth($userId);
+        }
+    
+        return $_COOKIE['safecrow_access_token'];
+    }
+    
+    private function getClient()
+    {
+        return $this->client;
     }
     
     private function validate($params)

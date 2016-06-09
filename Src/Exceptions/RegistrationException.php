@@ -1,7 +1,7 @@
 <?
 namespace Safecrow\Exceptions;
 
-class RegistrationException extends \Exception
+class RegistrationException extends SafecrowException
 {
     public function __construct()
     {

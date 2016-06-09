@@ -6,49 +6,26 @@ use Safecrow\Config;
 
 class AppTest extends \PHPUnit_Framework_TestCase
 {
-    private static 
-        $dev = "http://dev.safecrow.ru/api/v1",
-        $prod = "https://www.safecrow.ru/api/v1"
-    ;
-    
     /**
      * @test
      */
     public function createDevApp()
     {
-        $app = new App(Config::API_KEY, Config::API_SECRET, true);
+        $host = Config::ENVIROMENT == "dev" ? Config::DEV_HOST : Config::PROD_HOST;
         
-        $this->assertEquals(self::$dev, $app->getHost());
-    }
-    
-    /**
-     * @test
-     */
-    public function createProdApp()
-    {
-        $app = new App(Config::API_KEY, Config::API_SECRET);
-        $this->assertEquals(self::$prod, $app->getHost());
-    }
-    
-    /**
-     * @test
-     */
-    public function checkState()
-    {
-        $app = new App(Config::API_KEY, Config::API_SECRET, true);
+        $app = new App();
         
-        $this->assertEquals(Config::API_KEY, $app->getKey());
-        $this->assertEquals(hash("sha256", (Config::API_KEY.Config::API_SECRET.date('c'))), $app->getSecret());
+        $this->assertEquals($host, $app->getHost());
     }
-    
+   
     /**
      * @test
      */
     public function testAllowedFiles()
     {
-        $app = new App(Config::API_KEY, Config::API_SECRET, true);
+        $app = new App();
         
-        $this->assertTrue($app->IsAllowedFileType("text/plain"));
-        $this->assertFalse($app->IsAllowedFileType("text/xml"));
+        $this->assertTrue(App::IsAllowedFileType("text/plain"));
+        $this->assertFalse(App::IsAllowedFileType("text/xml"));
     }
 }

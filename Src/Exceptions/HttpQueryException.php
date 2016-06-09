@@ -1,7 +1,6 @@
 <?
 namespace Safecrow\Exceptions;
 
-class HttpQueryException extends \Exception
+class HttpQueryException extends SafecrowException
 {
-    
 }

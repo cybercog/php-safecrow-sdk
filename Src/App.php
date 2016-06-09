@@ -1,64 +1,66 @@
 <?
 namespace Safecrow;
 
+use Safecrow\Http\Client;
+use Safecrow\Exceptions\AuthException;
+
 class App
 {
-    private static
-        $devHost = "http://dev.safecrow.ru/api/v1",
-        $prodHost = "https://www.safecrow.ru/api/v1",
-        $arAllowedMimes = [
-            //Text
-            "text" => ["text/plain", "text/csv", "text/rtf", "application/rtf"],
-            //Images
-            "image" => ["image/gif", "image/jpeg", "image/jpg", "image/pjpeg", "image/png", "image/svg+xml", "image/tiff"],
-            //Ms Word
-            "word" => ["application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
-            //Ms Excel
-            "excel" => ["application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"],
-            //pdf
-            "pdf" => ["application/pdf"]
-        ]
-    ;
-    
-    private
+    private 
+        $client,
         $key,
-        $secret,
-        $host
+        $secret
     ;
     
-    /**
-     * @package Safecrow
-     * 
-     * @param string $key
-     * @param string $secret
-     * @param bool $bTest
-     */
-    public function __construct($key, $secret, $bTest = false)
+    public function __construct()
     {
-        $this->key = $key;
-        $this->secret = $secret;
+        $this->key = Config::API_KEY;
+        $this->secret = Config::API_SECRET;
         
-        $this->host = $bTest ? self::$devHost : self::$prodHost;
+        $this->client = new Client($this->getKey(), $this->getSecret(), $this->getHost());
+        
+        $oUserClient = clone $oSystemClient;
+        $oUserClient->useUserRequests();
+        
+        $this->users = new Users($oSystemClient);
+        $this->orders = new Orders($oUserClient, $this->users);
     }
     
-    public function getKey()
+    public function getUsers()
+    {
+        return new Users($this->client);
+    }
+    
+    public function getOrders($userId)
+    {
+        $client = clone $this->client;
+        $client->useUserRequests();
+        
+        if(!$this->getUsers()->getUserToken($userId)) {
+            throw new AuthException();
+        }
+        
+        return new Orders($client, $userId);
+    }
+    
+    private function getKey()
     {
         return $this->key;
     }
     
-    public function getSecret()
+    private function getSecret()
     {
         return hash("sha256", $this->key.$this->secret.date('c'));
     }
     
     public function getHost()
     {
-        return $this->host;
+        return Config::ENVIROMENT == "dev" ? Config::DEV_HOST : Config::PROD_HOST;
     }
     
-    public function IsAllowedFileType($type)
+    public static function IsAllowedFileType($type)
     {
-        foreach (self::$arAllowedMimes as $group) {
+        foreach (Config::ALLOWED_FILE_TYPES as $group) {
             if(in_array($type, $group)) {
                 return true;
             }
