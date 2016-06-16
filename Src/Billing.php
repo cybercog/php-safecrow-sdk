@@ -36,18 +36,6 @@ class Billing extends \PHPUnit_Framework_TestCase
         return isset($res['billing_info']) ? $res['billing_info'] : $res;
     }
     
-    /**
-     * ѕолучение платежной информации текущего пользовател€ в текущей сделке
-     * 
-     * @return array
-     */
-    public function get()
-    {
-        $res = $this->getClient()->get("/orders/{$this->getOrderId()}/billing_info");
-        
-        return isset($res['billing_info']) ? $res['billing_info'] : $res;
-    }
-    
     private function getClient()
     {
         return $this->client;

@@ -173,18 +173,4 @@ class BillingTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($res['holder_type'], $data['holder_type']);
         $this->assertEquals($res['billing_type'], $data['billing_type']);
     }
-    
-    /**
-     * Получение платежной информации о сделке
-     * 
-     * @test
-     * @cover Billing::get
-     * @depends createBusinessBillingWithAccount
-     */
-    public function getBillingInfo($info)
-    {
-        $res = $this->billing->get();
-        
-        $this->assertEquals($res['id'], $info['id']);
-    }
 }
