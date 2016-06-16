@@ -8,7 +8,6 @@ use Safecrow\Exceptions\RegistrationException;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
-use Safecrow\Config;
 
 class UserTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,13 +16,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $userName,
         $userEmail,
         $userPhone
-    ;
-    
-    private 
-        $app,
-        $users,
-        $userWithPhone,
-        $userWithEmail
     ;
     
     /**
@@ -35,181 +27,251 @@ class UserTest extends \PHPUnit_Framework_TestCase
         self::$userEmail = self::$userName."@test.ru";
         self::$userPhone = "8".rand(9000000000, 9999999999);
         
-        $this->app = new App(Config::API_KEY, Config::API_SECRET, true);
-        $this->users = new Users($this->app);
-        
         self::$logger = new Logger('tests');
         self::$logger->pushHandler(new StreamHandler('Logs/user.test.log', Logger::INFO));
     }
 
     /**
+     * Регистрация пользователя с email-ом
+     * 
      * @test
+     * @covers Users::reg
      */
     public function regUserWithEmail()
     {
-        $user = $this->users->reg([
+        $app = new App();
+        
+        $user = $app->getUsers()->reg(array(
             'name' => self::$userName,
             'email' => self::$userEmail,
             'accepts_conditions' => true
-        ]);
+        ));
 
-        self::$logger->info(json_encode([
+        self::$logger->info(json_encode(array(
             'method' => __METHOD__,
             'data' => $user
-        ]));
+        )));
         
         $this->assertEquals($user['name'], self::$userName);
         $this->assertEquals($user['email'], self::$userEmail);
+        
+        return $user;
     }
     
     /**
+     * Регистрация пользователя с телефоном
+     * 
      * @test
+     * @covers Users::reg
      */
     public function regUserWithPhone()
     {
-        $user = $this->app->getUsers()->reg([
+        $app = new App();
+        
+        $user = $app->getUsers()->reg(array(
             'name' => self::$userName,
             'phone' => self::$userPhone,
             'accepts_conditions' => true
-        ]);
+        ));
         
-        self::$logger->info(json_encode([
+        self::$logger->info(json_encode(array(
             'method' => __METHOD__,
             'data' => $user,
-        ]));
+        )));
         
         $this->assertEquals($user['name'], self::$userName);
         $this->assertEquals($user['phone'], self::$userPhone);
         
+        return $user;
     }
     
     /**
+     * Попытка регистрация пользователя без email и телефона
+     * 
      * @test
+     * @covers Users::reg
+     * @expectedException Safecrow\Exceptions\RegistrationException
      */
     public function regUserWithoutEmailAndPhone()
     {
-        $this->expectException(RegistrationException::class);
-        $this->use$this->app->getUsers()           'accepts_conditions' => true
-        ]);
+        $app = new App();
+        
+        $app->getUsers()->reg(array(
+            'accepts_conditions' => true
+        ));
     }
     
     /**
+     * Попытка регистрации без согласия с условиями
+     * 
      * @test
+     * @covers Users::reg
+     * @expectedException Safecrow\Exceptions\RegistrationException
      */
     public function regUserWithoutReqFields()
     {
-        $this->expectException(RegistrationException::class);
-        $this->app->getUsers()->reg([
+        $app = new App();
+        
+        $app->getUsers()->reg(array(
             'name' => self::$userName
-        ]);
+        ));
     }
     
     /**
+     * Неудачная попытка авторизации
+     * 
      * @test
+     * @covers Users::auth
      */
     public function authUnsuccess()
     {
-        $res = $this->app->getUsers()->auth(1);
+        $app = new App();
+        
+        $res = $app->getUsers()->auth(1);
         $this->assertArrayHasKey("errors", $res);
     }
     
     /**
+     * Удачная попытка авторизации
+     * 
      * @test
+     * @covers Users::auth
+     * @depends regUserWithEmail
      */
-    public function authSuccess()
+    public function authSuccess($user)
     {
-        $res = $this->app->getUsers()->auth(406);
+        $app = new App();
+        
+        $res = $app->getUsers()->auth($user['id']);
         $this->assertArrayHasKey("access_token",$res);
+        
+        $res['user'] = $user;
+        
+        return $res;
     }
     
     /**
-     * test
-     */
-    public function getUserAccessToken()
-    {
-        $this->assertEquals($_SERVER['safecrow_access_token'], $this->app->getUsers()->getUserToken(406));
-    }
-    
-    /**
+     * Получение access_token
+     * 
      * @test
+     * @covers Users::getUserToken()
+     * @depends authSuccess
      */
-    public function findUserByPhone()
+    public function getUserAccessToken($data)
     {
-        $user = $this->app->getUsers()->getByPhone("89999216803");
+        $app = new App(); 
+        $this->assertNotEmpty($app->getUsers()->getUserToken($data['user']['id']));
+    }
+    
+    /**
+     * Поиск пользователя по телефону
+     * 
+     * @test
+     * @covers Users::getByPhone
+     * @depends regUserWithPhone
+     */
+    public function findUserByPhone($user)
+    {
+        $app = new App();
+        
+        $finded = $app->getUsers()->getByPhone($user['phone']);
+        
         self::$logger->info(json_encode([
             'method' => __METHOD__,
             'data' => $user,
         ]));
-        $this->assertEquals($user['phone'], "89999216803");
+        
+        $this->assertEquals($finded['phone'], $user['phone']);
     }
     
     /**
+     * Поиск пользователя по email
+     * 
      * @test
+     * @covers Users::getByEmail
+     * @depends regUserWithEmail
      */
-    public function findUserByEmail()
+    public function findUserByEmail($user)
     {
-        $user = $this->app->getUsers()->getByEmail("test2220@test.ru");
+        $app = new App();
+        
+        $finded = $app->getUsers()->getByEmail($user['email']);
+        
         self::$logger->info(json_encode([
             'method' => __METHOD__,
             'data' => $user,
         ]));
-        $this->assertEquals($user['email'], "test2220@test.ru");
+        
+        $this->assertEquals($finded['email'], $user['email']);
     }
     
     /**
+     * Поиск по пустому email
+     * 
      * @test
+     * @covers Users::getByEmail
      */
     public function searchUserByEmptyEmail()
     {
-        $user = $this->app->getUsers()->getByEmail("");
+        $app = new App();
+        
+        $user = $app->getUsers()->getByEmail("");
         $this->assertFalse($user);
     }
     
     /**
+     * Поиск по пустому телефону
+     * 
      * @test
+     * @covers Users::getByPhone
      */
     public function searchUserByEmptyPhone()
     {
-        $user = $this->app->getUsers()->getByPhone("");
+        $app = new App();
+        
+        $user = $app->getUsers()->getByPhone("");
         $this->assertFalse($user);
     }
     
     /**
+     * Поиск по некорректному email
+     * 
      * @test
+     * @covers Users::getByEmail
      */
     public function searchUserByIncorrectEmail()
     {
-        $user = $this->app->getUsers()->getByEmail("incorrect_email");
+        $app = new App();
+        
+        $user = $app->getUsers()->getByEmail("incorrect_email");
         $this->assertFalse($user);
     }
     
     /**
+     * Попытка поиска по несуществующему email
+     * 
      * @test
+     * @covers Users::getByEmail
      */
     public function searchUserByEmailFail()
     {
-        $user = $this->app->getUsers()->getByEmail("durov@vk.com");
+        $app = new App();
         
+        $user = $app->getUsers()->getByEmail("durov@vk.com");
         $this->assertArrayHasKey("errors", $user);
     }
     
     /**
+     * Попытка поиска по несуществующему телефону
+     * 
      * @test
+     * @covers Users::getByPhone
      */
     public function searchUserByPhoneFail()
     {
-        $user = $this->app->getUsers()->getByPhone("19001234567");
+        $app = new App();
         
+        $user = $app->getUsers()->getByPhone("19001234567");
         $this->assertArrayHasKey("errors", $user);
-    }
-    
-    /**
-     * @test
-     */
-    public function getCurrentUser()
-    {
-        $user = $this->app->getUsers()->getCurrent();
-        
-        $this->assertNotEmpty($user);
     }
 }

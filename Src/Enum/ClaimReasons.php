@@ -2,7 +2,7 @@
 
 namespace Safecrow\Enum;
 
-class Claims
+class ClaimReasons
 {
     const SHIPPING_MISSED = "shipping_missed";
     const WRONG_PACKAGE = "wrong_package";
@@ -12,7 +12,7 @@ class Claims
     const NOT_SENDED = "not_sended";
     const OTHER = "other";
     
-    public static function getClaims()
+    public static function getClaimReasons()
     {
         $oReflect = new \ReflectionClass(self::class);
         return $oReflect->getConstants();

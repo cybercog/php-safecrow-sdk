@@ -3,8 +3,8 @@
 namespace Safecrow;
 
 use Safecrow\Http\Client;
-use Safecrow\Enum\Claims;
 use Safecrow\Exceptions\ClaimsException;
+use Safecrow\Enum\ClaimReasons;
 
 class Claims
 {
@@ -25,13 +25,13 @@ class Claims
      * @param array $fields
      * @return array
      */
-    public function createClaim(array $fields)
+    public function create(array $fields)
     {
         $this->validate($fields);
         
         $res = $this->getClient()->post("/orders/{$this->getOrderId()}/claim", array("claim" => $fields));
         
-        return $res["claim"] ?: $res;
+        return isset($res["claim"]) ? $res["claim"] : $res;
     }
     
     /**
@@ -56,7 +56,7 @@ class Claims
     {
         $arErrors = array();
         
-        if(!in_array($fields['reason'], Claims::getClaims())) {
+        if(!isset($fields['reason']) || !in_array($fields['reason'], ClaimReasons::getClaimReasons())) {
             $arErrors['reason'] = "Некорректный тип жалобы";
         }
         

@@ -2,6 +2,8 @@
 
 namespace Safecrow;
 
+use Safecrow\Http\Client;
+
 class Payments
 {
     private 
@@ -45,7 +47,7 @@ class Payments
      * @param array $info
      * @return array
      */
-    public function createBill($name, array $info)
+    public function createBill($name, array $info=null)
     {
         $payment_method = "invoice";
         
@@ -57,7 +59,7 @@ class Payments
         
         $res = $this->getClient()->post("/orders/{$this->getOrderId()}/payment", array("payment" => $data));
         
-        return $res['payment'] ?: $res;
+        return isset($res['payment']) ? $res['payment'] : $res;
     }
     
     /**
@@ -69,7 +71,7 @@ class Payments
     {
         $res = $this->getClient()->get("/orders/{$this->getOrderId()}/payment");
         
-        return $res['payment'] ?: $res;
+        return isset($res['payment']) ? $res['payment'] : $res;
     }
     
     

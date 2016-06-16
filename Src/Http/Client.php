@@ -41,6 +41,12 @@ class Client
             throw new Exception('Method is not allowed');
         }
         
+        for($i=0; $i <3 ; $i++) {
+            if(!isset($args[$i])) {
+                $args[$i] = null;
+            }
+        }
+        
         return $this->getRequest($method, $args[0], $args[1], $args[2]);
     }
     
@@ -63,7 +69,7 @@ class Client
         );
         
         $arUser = array(
-            'access_token' => $_COOKIE['safecrow_access_token']
+            'access_token' => isset($_SESSION['safecrow_access_token']) ? $_SESSION['safecrow_access_token'] : "" 
         );
         
         return $this->isUserRequests() ? $arUser : $arSystem;

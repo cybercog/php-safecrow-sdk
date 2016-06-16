@@ -1,7 +1,6 @@
 <? 
 namespace Safecrow\Http;
 
-use Safecrow\Exceptions\HttpQueryException;
 use Safecrow\App;
 
 use Monolog\Logger;
@@ -78,17 +77,17 @@ class Query
             //Получим всю инфу по запросу
             $this->arInfo = curl_getinfo($ch);
             $this->sStatus = $this->arInfo['http_code'];
-            
-            /* if($this->sStatus < 200 && $this->sStatus > 300) {
-                throw new HttpQueryException('Неудалось выполнить запрос по адресу '.$this->sUrl, $this->sStatus);
-            } */
 
             curl_close($ch);
-            return json_decode($res, 1);
+            if(strpos($this->arInfo['content_type'], "application/json") !== false) {
+                return json_decode($res, 1);
+            } else {
+                return $res;
+            }
+            
         }
         catch (\Exception  $e) 
         {
-            //return ['status' => $e->getCode(), 'msg' => $e->getMessage()];
             return false;
         }
         finally 
@@ -100,7 +99,7 @@ class Query
                 'method' => $this->sMethod,
                 'request' => $this->sUrl,
                 'data' => $this->sPostData,
-                'response' => $this->arInfo
+                'response' => $this->arInfo,
             ]));
         }
     }

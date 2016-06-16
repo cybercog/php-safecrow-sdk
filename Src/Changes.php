@@ -4,6 +4,7 @@ namespace Safecrow;
 
 use Safecrow\Enum\ChangeTypes;
 use Safecrow\Exceptions\ChangesException;
+use Safecrow\Http\Client;
 
 class Changes
 {
@@ -30,7 +31,7 @@ class Changes
         
         $res = $this->getClient()->post("/orders/{$this->getOrderId()}/order_changes", array("order_change" => $fields));
         
-        return $res['order_change'] ?: $res;
+        return isset($res['order_change']) ? $res['order_change'] : $res;
     }
     
     /**
@@ -47,7 +48,7 @@ class Changes
         
         $res = $this->getClient()->post("/orders/{$this->getOrderId()}/order_changes/{$changeId}/confirm");
         
-        return $res['order_change'] ?: $res;
+        return isset($res['order_change']) ? $res['order_change'] : $res;
     }
     
     /**
@@ -64,7 +65,7 @@ class Changes
         
         $res = $this->getClient()->post("/orders/{$this->getOrderId()}/order_changes/{$changeId}/reject");
         
-        return $res['order_change'] ?: $res;
+        return isset($res['order_change']) ? $res['order_change'] : $res;
     }
     
     /**
@@ -77,15 +78,18 @@ class Changes
     {
         $arErrors = array();
         
-        if(!in_array($fields['change_type'], ChangeTypes::getChangeTypes())) {
+        if(!isset($fields['change_type']) || !in_array($fields['change_type'], ChangeTypes::getChangeTypes())) {
             $arErrors['change_type'] = "Не указан тип изменения";
         }
         
-        if($fields['change_type'] == ChangeTypes::PROLONG_PROTECTION && !strtotime($fields['prolong_protection_to'])) {
+        if(
+            isset($fields['change_type']) && $fields['change_type'] == ChangeTypes::PROLONG_PROTECTION && 
+            (!isset($fields['prolong_protection_to']) || !strtotime($fields['prolong_protection_to']))
+        ) {
             $arErrors['prolong_protection_to'] = "Указана некорректная дата";
         }
         
-        if($fields['change_type'] == ChangeTypes::CHANGE_CONDITIONS && empty($fields['new_cost'])) {
+        if(isset($fields['change_type']) && $fields['change_type'] == ChangeTypes::CHANGE_CONDITIONS && empty($fields['new_cost'])) {
             $arErrors['new_cost'] = "Не указана новая стоимость";
         }
         
@@ -93,7 +97,7 @@ class Changes
             $ex = new ChangesException("Не указаны обязательные поля");
             $ex->setData($arErrors);
             
-            throw new $ex;
+            throw $ex;
         }
     }
     

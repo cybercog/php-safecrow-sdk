@@ -52,8 +52,8 @@ class Subscriptions
     /**
      * Удаление подписки
      * 
-     * @param unknown $subscribeId
-     * @return unknown
+     * @param string $subscribeId
+     * @return bool|array
      */
     public function unsubscribe($subscribeId)
     {
@@ -66,15 +66,15 @@ class Subscriptions
     /**
      * Подверждение подписки
      * 
-     * @param unknown $subscribeId
-     * @return unknown
+     * @param string $subscribeId
+     * @return bool|array
      */
     public function confirm($subscribeId)
     {
         $status = false;
         $res = $this->getClient()->post("/subscription/{$subscribeId}/confirm", null, $status);
         
-        return $sttaus ?: $res;
+        return $status ?: $res;
     }
     
     private function getClient()

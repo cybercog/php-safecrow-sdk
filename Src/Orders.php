@@ -91,24 +91,24 @@ class Orders
      * @param array $order
      * @return array
      */
-    public function createOrder(array $order)
+    public function create(array $order)
     {
         $this->validate($order);
         if(!empty($order['attachments'])) {
             $order['attachments'] = $this->processFiles($order['attachments']);
         }
         
-        if(!(int)$order['supplier_id']) {
+        if(!isset($order['supplier_id']) || !(int)$order['supplier_id']) {
             $order['supplier_id'] = $this->userId;
         }
         
-        if(!(int)$order['verify_days']) {
+        if(!isset($order['verify_days']) || !(int)$order['verify_days']) {
             $order['verify_days'] = Config::DEFAULT_VERIFY_DAYS;
         }
         
-        $res = $this->getClient()->post("/orders", $order);
+        $res = $this->getClient()->post("/orders", array('order' => $order));
         
-        return $res['order'] ?: $res;
+        return isset($res['order']) ? $res['order'] : $res;
     }
     
     /**
@@ -119,7 +119,7 @@ class Orders
      * 
      * @return array;
      */
-    public function calcCommision($sum, $payer)
+    public function calcComission($sum, $payer)
     {
         if(!(float)$sum || !in_array($payer, Payers::getPayers())) {
             return false;
@@ -127,7 +127,7 @@ class Orders
         
         $res = $this->getClient()->post("/orders/calc_commission", array('cost' => (int)$sum, 'commission_payer' => $payer));
         
-        return $res['cost'] ?: $res;
+        return $res;
     }
     
     /**
@@ -144,9 +144,9 @@ class Orders
             return false;
         }
         
-        $res = $this->getClient()->patch("/orders/{$orderId}", $fields);
+        $res = $this->getClient()->patch("/orders/{$orderId}", array('order' => $fields));
         
-        return $res['order'] ?: $res;
+        return isset($res['order']) ? $res['order'] : $res;
     }
     
     /**
@@ -168,7 +168,9 @@ class Orders
             $params['per'] = (int)$per;
         }
         
-        return $this->getClient()->get("/orders", $params);
+        $res = $this->getClient()->get("/orders", $params);
+        
+        return isset($res['orders']) ? $res['orders'] : $res;
     }
     
     /**
@@ -179,13 +181,13 @@ class Orders
      */
     public function getByID($id)
     {
-        if(!(int)$id) {
+        if(!isset($id) || !(int)$id) {
             return false;
         }
         
         $res = $this->getClient()->get("/orders/{$id}");
         
-        return $res['order'] ?: $res;
+        return isset($res['order']) ? $res['order'] : $res;
     }
     
     /**
@@ -197,17 +199,17 @@ class Orders
      */
     private function validate(array $order)
     {
-        $arErrors = arary();
+        $arErrors = array();
         
         if(empty($order['order_description'])) {
             $arErrors['order_description'] = 'Не заполнено описание сделки';
         }
         
-        if(!(float)($order['cost'])) {
+        if(!isset($order['cost']) || !(float)($order['cost'])) {
             $arErrors['cost'] = 'Не указана стоимость сделки';
         }
         
-        if(!in_array($order['commission_payer'], Payers::getPayers())) {
+        if(!isset($order['commission_payer']) || !in_array($order['commission_payer'], Payers::getPayers())) {
             $arErrors['commission_payer'] = 'Недопустимый тип плательщика';
         }
         

@@ -7,7 +7,7 @@ use Safecrow\Enum\PayerTypes;
 use Safecrow\Enum\PaymentTypes;
 use Safecrow\Exceptions\BillingException;
 
-class Billing
+class Billing extends \PHPUnit_Framework_TestCase
 {
     private 
         $client,
@@ -27,13 +27,13 @@ class Billing
      * @param array $fields
      * @return array
      */
-    public function createBillingInfo($fields)
+    public function create($fields)
     {
         $this->validateBillingInfo($fields);
         
         $res = $this->getClient()->post("/orders/{$this->getOrderId()}/billing_info", array("billing_info" => $fields));
 
-        return $res['billing_info'] ?: $res;
+        return isset($res['billing_info']) ? $res['billing_info'] : $res;
     }
     
     /**
@@ -41,11 +41,11 @@ class Billing
      * 
      * @return array
      */
-    public function getBillingInfo()
+    public function get()
     {
         $res = $this->getClient()->get("/orders/{$this->getOrderId()}/billing_info");
         
-        return $res['billing_info'] ?: $res;
+        return isset($res['billing_info']) ? $res['billing_info'] : $res;
     }
     
     private function getClient()
@@ -67,20 +67,12 @@ class Billing
     private function validateBillingInfo($fields)
     {
         $arErrors = array();
-        if(!in_array($fields['holder_type'], PayerTypes::getPayerTypes())) {
+        if(!isset($fields['holder_type']) || !in_array($fields['holder_type'], PayerTypes::getPayerTypes())) {
             $arErrors['holder_type'] = 'Некорректный тип плательщика';
         }
         
-        if(!int_array($fields['billing_type'], PaymentTypes::getPaymentTypes())) {
+        if(!isset($fields['billing_type']) ||  !in_array($fields['billing_type'], PaymentTypes::getPaymentTypes())) {
             $arErrors['billing_type'] = 'Недопустимый тип оплаты';
-        }
-        
-        if(
-            $fields['holder_type'] == PayerTypes::PERSONAL && 
-            $fields['billing_type'] == PaymentTypes::BANK_ACCOUNT &&
-            empty($fields['payment_params']['name'])
-        ) {
-            $arErrors['payment_params']['name'] = "Не указано имя плательщика";
         }
         
         if(empty($fields['payment_params']['bik'])) {
@@ -91,13 +83,25 @@ class Billing
             $arErrors['payment_params']['account'] = "Не указан расчетный счет";
         }
         
-        if($fields['holder_type'] == PayerTypes::BUSINESS && $fields['billing_type'] == PaymentTypes::BANK_ACCOUNT) {
-            if(empty($fields['payment_params']['ogrn'])) {
-                $arErrors['payment_params']['ogrn'] = 'Не указан ОГРН';
-            }
+        
+        
+        if(isset($fields['holder_type']) && isset($fields['billing_type'])) {
+            if(empty($fields['payment_params']['name']) && $fields['holder_type'] == PayerTypes::PERSONAL) {
+                $arErrors['payment_params']['name'] = "Не указано имя плательщика";
+            }    
             
-            if(empty($fields['payment_params']['inn'])) {
-                $arErrors['payment_params']['inn'] = 'Не указан ИНН';
+            if($fields['holder_type'] == PayerTypes::BUSINESS && $fields['billing_type'] == PaymentTypes::BANK_ACCOUNT) {
+                if(empty($fields['payment_params']['organization'])) {
+                    $arErrors['payment_params']['organization'] = 'Не указано название огранизации';
+                }
+                
+                if(empty($fields['payment_params']['ogrn'])) {
+                    $arErrors['payment_params']['ogrn'] = 'Не указан ОГРН';
+                }
+        
+                if(empty($fields['payment_params']['inn'])) {
+                    $arErrors['payment_params']['inn'] = 'Не указан ИНН';
+                }
             }
         }
         

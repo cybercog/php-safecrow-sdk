@@ -7,7 +7,8 @@ use Safecrow\Exceptions\AuthException;
 class App
 {
     private 
-        $client,
+        $sysClient,
+        $usrClient,
         $key,
         $secret
     ;
@@ -17,30 +18,32 @@ class App
         $this->key = Config::API_KEY;
         $this->secret = Config::API_SECRET;
         
-        $this->client = new Client($this->getKey(), $this->getSecret(), $this->getHost());
+        $this->sysClient = new Client($this->getKey(), $this->getSecret(), $this->getHost());
+
+        $this->usrClient = clone $this->sysClient;
+        $this->usrClient->useUserRequests();
         
-        $oUserClient = clone $oSystemClient;
-        $oUserClient->useUserRequests();
-        
-        $this->users = new Users($oSystemClient);
-        $this->orders = new Orders($oUserClient, $this->users);
+        $this->users = new Users($this->sysClient);
+        $this->orders = new Orders($this->usrClient, $this->users);
     }
     
     public function getUsers()
     {
-        return new Users($this->client);
+        return new Users($this->sysClient);
+    }
+    
+    public function getSubscriptions()
+    {
+        return new Subscriptions($this->sysClient);
     }
     
     public function getOrders($userId)
     {
-        $client = clone $this->client;
-        $client->useUserRequests();
-        
         if(!$this->getUsers()->getUserToken($userId)) {
             throw new AuthException();
         }
         
-        return new Orders($client, $userId);
+        return new Orders($this->usrClient, $userId);
     }
     
     private function getKey()

@@ -9,7 +9,7 @@ class Users
 {
     private 
         $client,
-        $iTokenLastUpdate
+        $token
     ;
     
     public function __construct(Client $client)
@@ -46,8 +46,8 @@ class Users
         $res = $this->getClient()->post("/sessions/auth", array('user_id' => (int)$id));
         
         if(!empty($res['access_token'])) {
-            $this->iTokenLastUpdate = time();
-            $_SERVER["safecrow_access_token"] = $res['access_token'];
+            $this->setLastTokenUpdate(time());
+            $this->setUserToken($res['access_token']);
         }
         
         return $res;
@@ -67,7 +67,7 @@ class Users
         
         $res = $this->getClient()->post("/sessions/find_user", array('email' => $email));
         
-        return $res['user'] ?: $res;
+        return isset($res['user']) ? $res['user'] : $res;
     }
     
     /**
@@ -84,7 +84,7 @@ class Users
         
         $res = $this->getClient()->post("/sessions/find_user", array('phone' => $phone));
 
-        return $res['user'] ?: $res;
+        return isset($res['user']) ? $res['user'] : $res;
     }
     
     public function getUserToken($userId)
@@ -92,12 +92,17 @@ class Users
         if(!(int)$userId) {
             return false;
         }
-    
-        if(time() - Config::USER_TOKEN_LIFETIME - $this->iTokenLastUpdate <= 0) {
+        
+        if(time() - Config::USER_TOKEN_LIFETIME - $this->getLastTokenUpdate() >= 0) {
             $res = $this->auth($userId);
         }
     
-        return $_COOKIE['safecrow_access_token'];
+        return $this->token;
+    }
+    
+    private function setUserToken($token)
+    {
+        $this->token = $_SESSION["safecrow_access_token"] = $token;
     }
     
     private function getClient()
@@ -114,5 +119,15 @@ class Users
         if(empty($params['email']) && empty($params['phone'])) {
             throw new RegistrationException;
         }
+    }
+    
+    private function getLastTokenUpdate()
+    {
+        return isset($_SERVER['safecrow_token_updated']) ? $_SERVER['safecrow_token_updated'] : 0;
+    }
+    
+    private function setLastTokenUpdate($val)
+    {
+        $_SERVER['safecrow_token_updated'] = $val;
     }
 }
