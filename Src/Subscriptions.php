@@ -3,6 +3,7 @@
 namespace Safecrow;
 
 use Safecrow\Http\Client;
+use Safecrow\Exceptions\SubscriptionsException;
 
 class Subscriptions
 {
@@ -23,6 +24,14 @@ class Subscriptions
      */
     public function subscribe($url, array $states, $subscribeId = null)
     {
+        if(empty($url)) {
+            throw new SubscriptionsException("Не указан url");
+        }
+        
+        if(empty($states) || !is_array($states)) {
+            throw new SubscriptionsException("Не указаны статусы");
+        }
+        
         $data = array(
             'url' => $url,
             'to_states' => $states
@@ -32,9 +41,9 @@ class Subscriptions
             $data['subscription_id'] = $subscribeId;
         }
         
-        $res = $this->getClient()->post("/subscriptions", $data);
+        $res = $this->getClient()->post("/subscriptions", array("app_subscription" => $data));
         
-        return $res['app_subscription'] ?: $res;
+        return isset($res['app_subscription']) ? $res['app_subscription'] : $res;
     }
     
     /**
@@ -46,7 +55,7 @@ class Subscriptions
     {
         $res = $this->getClient()->get("/subscriptions");
         
-        return $res['app_subscriptions'] ?: $res;
+        return isset($res['app_subscriptions']) ? $res['app_subscriptions'] : $res;
     }
     
     /**
@@ -57,10 +66,9 @@ class Subscriptions
      */
     public function unsubscribe($subscribeId)
     {
-        $status = false;
-        $res = $this->getClient()->delete("/subscriptions/{$subscribeId}", null, $status);
+        $res = $this->getClient()->delete("/subscriptions/{$subscribeId}");
         
-        return $status ?: $res;
+        return !$res ? true : $res;
     }
     
     /**
@@ -72,9 +80,9 @@ class Subscriptions
     public function confirm($subscribeId)
     {
         $status = false;
-        $res = $this->getClient()->post("/subscription/{$subscribeId}/confirm", null, $status);
+        $res = $this->getClient()->post("/subscriptions/{$subscribeId}/confirm");
         
-        return $status ?: $res;
+        return !$res ? true : $res;
     }
     
     private function getClient()
