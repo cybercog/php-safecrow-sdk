@@ -100,6 +100,7 @@ class Query
                 'request' => $this->sUrl,
                 'data' => $this->sPostData,
                 'response' => $this->arInfo,
+                'responseData' => $res
             ]));
         }
     }

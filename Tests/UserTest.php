@@ -46,11 +46,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
             'email' => self::$userEmail,
             'accepts_conditions' => true
         ));
-
-        self::$logger->info(json_encode(array(
-            'method' => __METHOD__,
-            'data' => $user
-        )));
         
         $this->assertEquals($user['name'], self::$userName);
         $this->assertEquals($user['email'], self::$userEmail);
@@ -73,11 +68,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
             'phone' => self::$userPhone,
             'accepts_conditions' => true
         ));
-        
-        self::$logger->info(json_encode(array(
-            'method' => __METHOD__,
-            'data' => $user,
-        )));
         
         $this->assertEquals($user['name'], self::$userName);
         $this->assertEquals($user['phone'], self::$userPhone);

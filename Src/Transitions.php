@@ -39,7 +39,7 @@ class Transitions
     {
         $res = $this->getClient()->post("/orders/{$this->getOrderId()}/transitions", array('transition' => array('to_state' => $state)));
         
-        return $res;
+        return empty($res) ?: $res;
     }
     
     private function getClient()

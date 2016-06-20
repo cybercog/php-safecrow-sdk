@@ -9,7 +9,8 @@ class Users
 {
     private 
         $client,
-        $token
+        $token,
+        $tokens = array()
     ;
     
     public function __construct(Client $client)
@@ -47,7 +48,6 @@ class Users
         
         if(!empty($res['access_token'])) {
             $this->setLastTokenUpdate(time());
-            $this->setUserToken($res['access_token']);
         }
         
         return $res;
@@ -93,9 +93,12 @@ class Users
             return false;
         }
         
-        if(time() - Config::USER_TOKEN_LIFETIME - $this->getLastTokenUpdate() >= 0) {
+        if(!isset($this->tokens[$userId]) || time() - Config::USER_TOKEN_LIFETIME - $this->getLastTokenUpdate() >= 0) {
             $res = $this->auth($userId);
+            $this->tokens[$userId] = isset($res['access_token']) ? $res['access_token'] : false;
         }
+        
+        $this->setUserToken($this->tokens[$userId]);
     
         return $this->token;
     }

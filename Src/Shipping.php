@@ -22,39 +22,30 @@ class Shipping
      * Создание запроса на возврат/доставку
      * 
      * @param array $fields
+     * @param bool $return - если true, то запрос на возврат
      * @return array
      */
-    public function create($fields)
+    public function create($fields, $return=false)
     {
         if(!empty($fields['attachment'])) {
             $fields['attachment'] = $this->processFiles($fields['attachment']);
         }
         
-        $res = $this->getClient()->post("/orders/{$this->getOrderId()}/shipping", $fields);
+        $shipping = $return ? "shipping_back" : "shippng";
+        $res = $this->getClient()->post("/orders/{$this->getOrderId()}/{$shipping}", array("tracking" => $fields));
         
         return $res['tracking'] ?: $res;
     }
     
     /**
-     * Получение информации о доставке
-     * 
+     * Получение информации о доставке/возврате
+     * @param bool $return - если true, то запрос на возврат 
      * @return array
      */
-    public function getShipping()
+    public function get($return = false)
     {
-        $res = $this->getClient()->get("/orders/{$this->getOrderId()}/shipping");
-        
-        return $res['tracking'] ?: $res;
-    }
-    
-    /**
-     * Получение информации о возврате
-     * 
-     * @return array
-     */
-    public function getShippingBack()
-    {
-        $res = $this->getClient()->get("/orders/{$this->getOrderId()}/shipping_back");
+        $shipping = $return ? "shipping_back" : "shippng";
+        $res = $this->getClient()->get("/orders/{$this->getOrderId()}/{$shipping}");
         
         return $res['tracking'] ?: $res;
     }
