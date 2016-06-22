@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Safecrow\Enum;
 
 class Payers
@@ -9,7 +9,7 @@ class Payers
     
     public static function getPayers()
     {
-        $oReflection = new \ReflectionClass(self::class);
+        $oReflection = new \ReflectionClass(__CLASS__);
         return $oReflection->getConstants();
     }
 }

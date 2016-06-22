@@ -20,7 +20,7 @@ class Changes
     }
     
     /**
-     * Ñîçäàíèå çàïðîñà íà èçìåíåíèÿ
+     * Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð·Ð°Ð¿Ñ€Ð¾ÑÐ° Ð½Ð° Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ
      * 
      * @param array $fields
      * @return array
@@ -35,7 +35,7 @@ class Changes
     }
     
     /**
-     * Ïîäòâåðæäåíèå èçìåíåíèÿ ñäåëêè
+     * ÐŸÐ¾Ð´Ñ‚Ð²ÐµÑ€Ð¶Ð´ÐµÐ½Ð¸Ðµ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ ÑÐ´ÐµÐ»ÐºÐ¸
      * @param int $changeId
      * @throws \Safecrow\Exceptions\ChangesException
      * @return array
@@ -43,7 +43,7 @@ class Changes
     public function confirm($changeId)
     {
         if(!(int)$changeId) {
-            throw new ChangesException("Íåêîððåêòíûé id çàïðîñà íà èçìåíåíèÿ");
+            throw new ChangesException("ÐÐµÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ñ‹Ð¹ id Ð·Ð°Ð¿Ñ€Ð¾ÑÐ° Ð½Ð° Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ");
         }
         
         $res = $this->getClient()->post("/orders/{$this->getOrderId()}/order_changes/{$changeId}/confirm");
@@ -52,7 +52,7 @@ class Changes
     }
     
     /**
-     * Îòêëîíåíèå çàïðîñà íà èçìåíåíèå
+     * ÐžÑ‚ÐºÐ»Ð¾Ð½ÐµÐ½Ð¸Ðµ Ð·Ð°Ð¿Ñ€Ð¾ÑÐ° Ð½Ð° Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ðµ
      * @param int $changeId
      * @throws \Safecrow\Exceptions\ChangesException
      * @return array
@@ -60,7 +60,7 @@ class Changes
     public function reject($changeId)
     {
         if(!(int)$changeId) {
-            throw new ChangesException("Íåêîððåêòíûé id çàïðîñà íà èçìåíåíèÿ");
+            throw new ChangesException("ÐÐµÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ñ‹Ð¹ id Ð·Ð°Ð¿Ñ€Ð¾ÑÐ° Ð½Ð° Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ");
         }
         
         $res = $this->getClient()->post("/orders/{$this->getOrderId()}/order_changes/{$changeId}/reject");
@@ -69,7 +69,7 @@ class Changes
     }
     
     /**
-     * Âàëèäàöèÿ ïîëåé çàïðîñà íà èçìåíåíèÿ
+     * Ð’Ð°Ð»Ð¸Ð´Ð°Ñ†Ð¸Ñ Ð¿Ð¾Ð»ÐµÐ¹ Ð·Ð°Ð¿Ñ€Ð¾ÑÐ° Ð½Ð° Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ
      * 
      * @param array $fields
      * @throws \Safecrow\Exceptions\ChangesException
@@ -79,22 +79,22 @@ class Changes
         $arErrors = array();
         
         if(!isset($fields['change_type']) || !in_array($fields['change_type'], ChangeTypes::getChangeTypes())) {
-            $arErrors['change_type'] = "Íå óêàçàí òèï èçìåíåíèÿ";
+            $arErrors['change_type'] = "ÐÐµ ÑƒÐºÐ°Ð·Ð°Ð½ Ñ‚Ð¸Ð¿ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ";
         }
         
         if(
             isset($fields['change_type']) && $fields['change_type'] == ChangeTypes::PROLONG_PROTECTION && 
             (!isset($fields['prolong_protection_to']) || !strtotime($fields['prolong_protection_to']))
         ) {
-            $arErrors['prolong_protection_to'] = "Óêàçàíà íåêîððåêòíàÿ äàòà";
+            $arErrors['prolong_protection_to'] = "Ð£ÐºÐ°Ð·Ð°Ð½Ð° Ð½ÐµÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ð°Ñ Ð´Ð°Ñ‚Ð°";
         }
         
         if(isset($fields['change_type']) && $fields['change_type'] == ChangeTypes::CHANGE_CONDITIONS && empty($fields['new_cost'])) {
-            $arErrors['new_cost'] = "Íå óêàçàíà íîâàÿ ñòîèìîñòü";
+            $arErrors['new_cost'] = "ÐÐµ ÑƒÐºÐ°Ð·Ð°Ð½Ð° Ð½Ð¾Ð²Ð°Ñ ÑÑ‚Ð¾Ð¸Ð¼Ð¾ÑÑ‚ÑŒ";
         }
         
         if(!empty($arErrors)) {
-            $ex = new ChangesException("Íå óêàçàíû îáÿçàòåëüíûå ïîëÿ");
+            $ex = new ChangesException("ÐÐµ ÑƒÐºÐ°Ð·Ð°Ð½Ñ‹ Ð¾Ð±ÑÐ·Ð°Ñ‚ÐµÐ»ÑŒÐ½Ñ‹Ðµ Ð¿Ð¾Ð»Ñ");
             $ex->setData($arErrors);
             
             throw $ex;

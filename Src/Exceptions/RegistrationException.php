@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Safecrow\Exceptions;
 
 class RegistrationException extends SafecrowException

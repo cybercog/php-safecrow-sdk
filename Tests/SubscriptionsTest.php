@@ -33,7 +33,7 @@ class SubscriptionsTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Неудчная попытка подписки
+     * РќРµСѓРґС‡РЅР°СЏ РїРѕРїС‹С‚РєР° РїРѕРґРїРёСЃРєРё
      * 
      * @test
      * @covers Subscriptions::subscribe
@@ -45,7 +45,7 @@ class SubscriptionsTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Подписка
+     * РџРѕРґРїРёСЃРєР°
      * 
      * @test
      * @covers Subscriptions::subscribe
@@ -61,7 +61,7 @@ class SubscriptionsTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Получение списка подписок
+     * РџРѕР»СѓС‡РµРЅРёРµ СЃРїРёСЃРєР° РїРѕРґРїРёСЃРѕРє
      * 
      * @test
      * @covers Subscriptions::getList
@@ -83,7 +83,7 @@ class SubscriptionsTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Подтверждение подписки
+     * РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ РїРѕРґРїРёСЃРєРё
      * 
      * @test
      * @covers Subscription::confirm
@@ -97,7 +97,7 @@ class SubscriptionsTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Удаление подписки
+     * РЈРґР°Р»РµРЅРёРµ РїРѕРґРїРёСЃРєРё
      * 
      * @test
      * @covers Subscriptions::unsubscribe

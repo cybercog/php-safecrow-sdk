@@ -1,4 +1,5 @@
-<?
+<?php
+
 namespace Safecrow;
 
 use Safecrow\Http\Client;
@@ -63,7 +64,7 @@ class App
     
     public static function IsAllowedFileType($type)
     {
-        foreach (Config::ALLOWED_FILE_TYPES as $group) {
+        foreach (Config::$arAllowedFileTypes as $group) {
             if(in_array($type, $group)) {
                 return true;
             }

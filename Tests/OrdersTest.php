@@ -46,7 +46,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Неудачная попытка создать заказ
+     * РќРµСѓРґР°С‡РЅР°СЏ РїРѕРїС‹С‚РєР° СЃРѕР·РґР°С‚СЊ Р·Р°РєР°Р·
      * 
      * @test
      * @covers Orders::create
@@ -60,7 +60,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Создание заказа без указания пользователя
+     * РЎРѕР·РґР°РЅРёРµ Р·Р°РєР°Р·Р° Р±РµР· СѓРєР°Р·Р°РЅРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
      * 
      * @test
      * @covers Orders::create
@@ -89,7 +89,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Создание заказа с указанием текущего пользователя как покупателя
+     * РЎРѕР·РґР°РЅРёРµ Р·Р°РєР°Р·Р° СЃ СѓРєР°Р·Р°РЅРёРµРј С‚РµРєСѓС‰РµРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РєР°Рє РїРѕРєСѓРїР°С‚РµР»СЏ
      * 
      * @test
      * @covers Orders::create
@@ -115,7 +115,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Расчет комиссии
+     * Р Р°СЃС‡РµС‚ РєРѕРјРёСЃСЃРёРё
      * 
      * @test
      * @covers Orders::calcComission
@@ -127,7 +127,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Редактирование заказа
+     * Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ Р·Р°РєР°Р·Р°
      * 
      * @test
      * @covers Orders::editOrder
@@ -146,7 +146,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Получение списка заказов
+     * РџРѕР»СѓС‡РµРЅРёРµ СЃРїРёСЃРєР° Р·Р°РєР°Р·РѕРІ
      * 
      * @test
      * @covers Orders::getList
@@ -168,7 +168,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Получение заказа по Id
+     * РџРѕР»СѓС‡РµРЅРёРµ Р·Р°РєР°Р·Р° РїРѕ Id
      * 
      * @test
      * @covers Orders::getById
@@ -181,7 +181,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Попытка поиска без Id заказа
+     * РџРѕРїС‹С‚РєР° РїРѕРёСЃРєР° Р±РµР· Id Р·Р°РєР°Р·Р°
      * @test
      * @covers Orders::getById
      */
@@ -192,7 +192,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Попытка поиска с несуществующим Id
+     * РџРѕРїС‹С‚РєР° РїРѕРёСЃРєР° СЃ РЅРµСЃСѓС‰РµСЃС‚РІСѓСЋС‰РёРј Id
      * 
      * @test
      * @covers Orders::getById
@@ -205,7 +205,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
     
     
     /**
-     * Получение доступа к основным экземплярам вспомогательных классов
+     * РџРѕР»СѓС‡РµРЅРёРµ РґРѕСЃС‚СѓРїР° Рє РѕСЃРЅРѕРІРЅС‹Рј СЌРєР·РµРјРїР»СЏСЂР°Рј РІСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅС‹С… РєР»Р°СЃСЃРѕРІ
      *
      * @test
      * @covers Orders::getBillings

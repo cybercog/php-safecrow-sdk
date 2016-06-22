@@ -20,7 +20,7 @@ class Claims
     }
     
     /**
-     * Ñîçäàíèå æàëîáû
+     * Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð¶Ð°Ð»Ð¾Ð±Ñ‹
      * 
      * @param array $fields
      * @return array
@@ -35,7 +35,7 @@ class Claims
     }
     
     /**
-     * Ïîëó÷åíèå æàëîáû íà çàêàç
+     * ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ð¶Ð°Ð»Ð¾Ð±Ñ‹ Ð½Ð° Ð·Ð°ÐºÐ°Ð·
      * @return unknown
      */
     public function getClaim()
@@ -46,7 +46,7 @@ class Claims
     }
     
     /**
-     * Âàëèäàöèÿ ïîëåé æàëîáû
+     * Ð’Ð°Ð»Ð¸Ð´Ð°Ñ†Ð¸Ñ Ð¿Ð¾Ð»ÐµÐ¹ Ð¶Ð°Ð»Ð¾Ð±Ñ‹
      * 
      * @param array $fields
      * @throws \Safecrow\Exceptions\ClaimsException
@@ -57,15 +57,15 @@ class Claims
         $arErrors = array();
         
         if(!isset($fields['reason']) || !in_array($fields['reason'], ClaimReasons::getClaimReasons())) {
-            $arErrors['reason'] = "Íåêîððåêòíûé òèï æàëîáû";
+            $arErrors['reason'] = "ÐÐµÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ñ‹Ð¹ Ñ‚Ð¸Ð¿ Ð¶Ð°Ð»Ð¾Ð±Ñ‹";
         }
         
         if(empty($fields['description'])) {
-            $arErrors['description'] = "Íå óêàçàí êîììåíòðàðèé ê æàëîáû";
+            $arErrors['description'] = "ÐÐµ ÑƒÐºÐ°Ð·Ð°Ð½ ÐºÐ¾Ð¼Ð¼ÐµÐ½Ñ‚Ñ€Ð°Ñ€Ð¸Ð¹ Ðº Ð¶Ð°Ð»Ð¾Ð±Ñ‹";
         }
         
         if(!empty($arErrors)) {
-            $ex = new ClaimsException("Íå çàïîëíåíû îáÿçàòåëüíûå ïîëÿ");
+            $ex = new ClaimsException("ÐÐµ Ð·Ð°Ð¿Ð¾Ð»Ð½ÐµÐ½Ñ‹ Ð¾Ð±ÑÐ·Ð°Ñ‚ÐµÐ»ÑŒÐ½Ñ‹Ðµ Ð¿Ð¾Ð»Ñ");
             $ex->setData($arErrors);
             
             throw $ex;

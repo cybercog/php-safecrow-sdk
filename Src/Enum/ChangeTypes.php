@@ -10,7 +10,7 @@ class ChangeTypes
     
     public static function getChangeTypes()
     {
-        $oReflection = new \ReflectionClass(self::class);
+        $oReflection = new \ReflectionClass(__CLASS__);
         return $oReflection->getConstants();
     }
 }

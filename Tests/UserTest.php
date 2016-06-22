@@ -32,7 +32,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Регистрация пользователя с email-ом
+     * Р РµРіРёСЃС‚СЂР°С†РёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ СЃ email-РѕРј
      * 
      * @test
      * @covers Users::reg
@@ -54,7 +54,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Регистрация пользователя с телефоном
+     * Р РµРіРёСЃС‚СЂР°С†РёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ СЃ С‚РµР»РµС„РѕРЅРѕРј
      * 
      * @test
      * @covers Users::reg
@@ -76,7 +76,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Попытка регистрация пользователя без email и телефона
+     * РџРѕРїС‹С‚РєР° СЂРµРіРёСЃС‚СЂР°С†РёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ Р±РµР· email Рё С‚РµР»РµС„РѕРЅР°
      * 
      * @test
      * @covers Users::reg
@@ -92,7 +92,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Попытка регистрации без согласия с условиями
+     * РџРѕРїС‹С‚РєР° СЂРµРіРёСЃС‚СЂР°С†РёРё Р±РµР· СЃРѕРіР»Р°СЃРёСЏ СЃ СѓСЃР»РѕРІРёСЏРјРё
      * 
      * @test
      * @covers Users::reg
@@ -108,7 +108,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Неудачная попытка авторизации
+     * РќРµСѓРґР°С‡РЅР°СЏ РїРѕРїС‹С‚РєР° Р°РІС‚РѕСЂРёР·Р°С†РёРё
      * 
      * @test
      * @covers Users::auth
@@ -122,7 +122,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Удачная попытка авторизации
+     * РЈРґР°С‡РЅР°СЏ РїРѕРїС‹С‚РєР° Р°РІС‚РѕСЂРёР·Р°С†РёРё
      * 
      * @test
      * @covers Users::auth
@@ -141,7 +141,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Получение access_token
+     * РџРѕР»СѓС‡РµРЅРёРµ access_token
      * 
      * @test
      * @covers Users::getUserToken()
@@ -154,7 +154,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Поиск пользователя по телефону
+     * РџРѕРёСЃРє РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РїРѕ С‚РµР»РµС„РѕРЅСѓ
      * 
      * @test
      * @covers Users::getByPhone
@@ -175,7 +175,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Поиск пользователя по email
+     * РџРѕРёСЃРє РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РїРѕ email
      * 
      * @test
      * @covers Users::getByEmail
@@ -196,7 +196,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Поиск по пустому email
+     * РџРѕРёСЃРє РїРѕ РїСѓСЃС‚РѕРјСѓ email
      * 
      * @test
      * @covers Users::getByEmail
@@ -210,7 +210,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Поиск по пустому телефону
+     * РџРѕРёСЃРє РїРѕ РїСѓСЃС‚РѕРјСѓ С‚РµР»РµС„РѕРЅСѓ
      * 
      * @test
      * @covers Users::getByPhone
@@ -224,7 +224,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Поиск по некорректному email
+     * РџРѕРёСЃРє РїРѕ РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРјСѓ email
      * 
      * @test
      * @covers Users::getByEmail
@@ -238,7 +238,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Попытка поиска по несуществующему email
+     * РџРѕРїС‹С‚РєР° РїРѕРёСЃРєР° РїРѕ РЅРµСЃСѓС‰РµСЃС‚РІСѓСЋС‰РµРјСѓ email
      * 
      * @test
      * @covers Users::getByEmail
@@ -252,7 +252,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Попытка поиска по несуществующему телефону
+     * РџРѕРїС‹С‚РєР° РїРѕРёСЃРєР° РїРѕ РЅРµСЃСѓС‰РµСЃС‚РІСѓСЋС‰РµРјСѓ С‚РµР»РµС„РѕРЅСѓ
      * 
      * @test
      * @covers Users::getByPhone

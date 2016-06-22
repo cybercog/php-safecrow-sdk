@@ -9,7 +9,7 @@ class PaymentTypes
     
     public static function getPaymentTypes()
     {
-        $oReflection = new \ReflectionClass(self::class);
+        $oReflection = new \ReflectionClass(__CLASS__);
         return $oReflection->getConstants();
     }
 }

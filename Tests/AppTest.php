@@ -10,7 +10,7 @@ use Safecrow\Subscriptions;
 class AppTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Корректность создания экземпляра класса приложения
+     * РљРѕСЂСЂРµРєС‚РЅРѕСЃС‚СЊ СЃРѕР·РґР°РЅРёСЏ СЌРєР·РµРјРїР»СЏСЂР° РєР»Р°СЃСЃР° РїСЂРёР»РѕР¶РµРЅРёСЏ
      * 
      * @test
      * @covers App::getHost()
@@ -25,7 +25,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Получение экземпляра класса для работы с пользователями
+     * РџРѕР»СѓС‡РµРЅРёРµ СЌРєР·РµРјРїР»СЏСЂР° РєР»Р°СЃСЃР° РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏРјРё
      * 
      * @test
      * @covers App::getUsers()
@@ -37,7 +37,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Получение экземпляра класса для работы с заказами
+     * РџРѕР»СѓС‡РµРЅРёРµ СЌРєР·РµРјРїР»СЏСЂР° РєР»Р°СЃСЃР° РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р·Р°РєР°Р·Р°РјРё
      * @test
      * @covers App::getOrders($userId)
      */
@@ -48,7 +48,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ошибка при получение экземпляра класса для работы с пользователями
+     * РћС€РёР±РєР° РїСЂРё РїРѕР»СѓС‡РµРЅРёРµ СЌРєР·РµРјРїР»СЏСЂР° РєР»Р°СЃСЃР° РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏРјРё
      * @test
      * @covers App::getOrders($userId)
      * @expectedException Safecrow\Exceptions\AuthException
@@ -60,7 +60,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Получение экземпляра класса для работы с подписками
+     * РџРѕР»СѓС‡РµРЅРёРµ СЌРєР·РµРјРїР»СЏСЂР° РєР»Р°СЃСЃР° РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РїРѕРґРїРёСЃРєР°РјРё
      * @test
      * @covers App::getSubscriptions()
      */
@@ -71,7 +71,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
     }
    
     /**
-     * Проверка корректности типа файла
+     * РџСЂРѕРІРµСЂРєР° РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚Рё С‚РёРїР° С„Р°Р№Р»Р°
      * 
      * @test
      */

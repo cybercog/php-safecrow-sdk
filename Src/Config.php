@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Safecrow;
 
 class Config
@@ -8,16 +8,16 @@ class Config
     const API_KEY = "b9598ffa-f905-4908-92b1-90e602baa2b2";
     const API_SECRET  = "a6420c86bdd9fe871315210e13eed817fc88de887b9ebe953edfae46174c9434";
     
-    //Âðåìÿ æèçíè ïîëüçîâàòåëüñêîãî òîêåíà
-    const USER_TOKEN_LIFETIME = 60*15; //15 min
+    //Â¬Ñ€ÐµÐ¼Â¤ Ð¶Ð¸Ð·Ð½Ð¸ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑŒÑÐºÐ¾Ð³Ð¾ Ñ‚Ð¾ÐºÐµÐ½Ð°
+    const USER_TOKEN_LIFETIME = 900; //15 min
     
-    //Âðåìÿ âàëèäàöèè çàêàçà
+    //Â¬Ñ€ÐµÐ¼Â¤ Ð²Ð°Ð»Ð¸Ð´Ð°Ñ†Ð¸Ð¸ Ð·Ð°ÐºÐ°Ð·Ð°
     const DEFAULT_VERIFY_DAYS = 21;
     
     const DEV_HOST = "http://dev.safecrow.ru/api/v1";
     const PROD_HOST = "https://www.safecrow.ru/api/v1";
     
-    const ALLOWED_FILE_TYPES = array(
+    public static $arAllowedFileTypes = array(
         //Text
         "text" => array("text/plain", "text/csv", "text/rtf", "application/rtf"),
         //Images

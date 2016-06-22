@@ -19,7 +19,7 @@ class Users
     }
     
     /**
-     * Регистрация пользователя
+     * Р РµРіРёСЃС‚СЂР°С†РёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
      * @param array $params
      * @return boolean|mixed
      * @throws RegistrationException
@@ -33,7 +33,7 @@ class Users
     }
     
     /**
-     * Авторизация пользователя
+     * РђРІС‚РѕСЂРёР·Р°С†РёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
      * @param int $id
      * @return string
      * @throws AuthException
@@ -41,7 +41,7 @@ class Users
     public function auth($id)
     {
         if(!(int)$id) {
-            throw new AuthException("Некорректный id пользователя");
+            throw new AuthException("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ id РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ");
         }
         
         $res = $this->getClient()->post("/sessions/auth", array('user_id' => (int)$id));
@@ -54,7 +54,7 @@ class Users
     }
     
     /**
-     * Поиск пользователя по Email
+     * РџРѕРёСЃРє РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РїРѕ Email
      * 
      * @param string $email
      * @return array|bool
@@ -71,7 +71,7 @@ class Users
     }
     
     /**
-     * Поиск пользователя по телефону
+     * РџРѕРёСЃРє РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РїРѕ С‚РµР»РµС„РѕРЅСѓ
      * 
      * @param string $phone
      * @return array|bool
