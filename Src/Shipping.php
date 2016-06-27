@@ -19,10 +19,10 @@ class Shipping
     }
     
     /**
-     * Ñîçäàíèå çàïðîñà íà âîçâðàò/äîñòàâêó
+     * Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð·Ð°Ð¿Ñ€Ð¾ÑÐ° Ð½Ð° Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‚/Ð´Ð¾ÑÑ‚Ð°Ð²ÐºÑƒ
      * 
      * @param array $fields
-     * @param bool $return - åñëè true, òî çàïðîñ íà âîçâðàò
+     * @param bool $return - ÐµÑÐ»Ð¸ true, Ñ‚Ð¾ Ð·Ð°Ð¿Ñ€Ð¾Ñ Ð½Ð° Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‚
      * @return array
      */
     public function create($fields, $return=false)
@@ -38,8 +38,8 @@ class Shipping
     }
     
     /**
-     * Ïîëó÷åíèå èíôîðìàöèè î äîñòàâêå/âîçâðàòå
-     * @param bool $return - åñëè true, òî çàïðîñ íà âîçâðàò 
+     * ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ð¸ Ð¾ Ð´Ð¾ÑÑ‚Ð°Ð²ÐºÐµ/Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‚Ðµ
+     * @param bool $return - ÐµÑÐ»Ð¸ true, Ñ‚Ð¾ Ð·Ð°Ð¿Ñ€Ð¾Ñ Ð½Ð° Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‚ 
      * @return array
      */
     public function get($return = false)
@@ -61,14 +61,14 @@ class Shipping
     }
     
     /**
-     * Ïðîâåðÿåò ñîäåðæèìîå ìàññèâà
+     * ÐŸÑ€Ð¾Ð²ÐµÑ€ÑÐµÑ‚ ÑÐ¾Ð´ÐµÑ€Ð¶Ð¸Ð¼Ð¾Ðµ Ð¼Ð°ÑÑÐ¸Ð²Ð°
      * @param array files
      * @throws \Safecrow\Exceptions\IncorrectAttachmentException
      * @return array
      */
     private function processFiles(array $files)
     {
-        //Åñëè ïåðåäàëè óðëû, òî ïîïûòàåìñÿ ïîëó÷èòü èíôó î ôàéëå
+        //Ð•ÑÐ»Ð¸ Ð¿ÐµÑ€ÐµÐ´Ð°Ð»Ð¸ ÑƒÑ€Ð»Ñ‹, Ñ‚Ð¾ Ð¿Ð¾Ð¿Ñ‹Ñ‚Ð°ÐµÐ¼ÑÑ Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ Ð¸Ð½Ñ„Ñƒ Ð¾ Ñ„Ð°Ð¹Ð»Ðµ
         foreach ($files as $k => $file) {
             if(is_string($file)) {
                 $files[$k] = FilesHelper::prepareFile($file);

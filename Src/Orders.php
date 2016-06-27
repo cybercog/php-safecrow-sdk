@@ -20,7 +20,7 @@ class Orders
     }
     
     /**
-     * Ïîëó÷åíèå îáúåêòà äëÿ ðàáîòû ñî ñ÷åòàìè
+     * ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ð¾Ð±ÑŠÐµÐºÑ‚Ð° Ð´Ð»Ñ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹ ÑÐ¾ ÑÑ‡ÐµÑ‚Ð°Ð¼Ð¸
      * 
      * @param int $orderId
      * @return \Safecrow\Billing
@@ -31,7 +31,7 @@ class Orders
     }
     
     /**
-     * Ïîëó÷åíèå îáúåêòà äëÿ ðàáîòû ñ èçìåíåíèÿìè çàêàçà
+     * ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ð¾Ð±ÑŠÐµÐºÑ‚Ð° Ð´Ð»Ñ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹ Ñ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸ÑÐ¼Ð¸ Ð·Ð°ÐºÐ°Ð·Ð°
      * 
      * @param int $orderId
      * @return \Safecrow\Changes
@@ -42,7 +42,7 @@ class Orders
     }
     
     /**
-     * Ïîëó÷åíèå îáúåêòà äëÿ ðàáîòû ñ æàëîáàìè
+     * ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ð¾Ð±ÑŠÐµÐºÑ‚Ð° Ð´Ð»Ñ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹ Ñ Ð¶Ð°Ð»Ð¾Ð±Ð°Ð¼Ð¸
      * 
      * @param int $orderId
      * @return \Safecrow\Claims
@@ -53,7 +53,7 @@ class Orders
     }
     
     /**
-     * Ïîëó÷åíèå îáúåêòà äëÿ ðàáîòû ñ îïëàòîé
+     * ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ð¾Ð±ÑŠÐµÐºÑ‚Ð° Ð´Ð»Ñ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹ Ñ Ð¾Ð¿Ð»Ð°Ñ‚Ð¾Ð¹
      * 
      * @param int $orderId
      * @return \Safecrow\Payments
@@ -64,7 +64,7 @@ class Orders
     }
     
     /**
-     * Ïîëó÷åíèå îáúåêòà äëÿ ðàáîòû ñ äîñòàâêîé/âîçâðàòîì
+     * ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ð¾Ð±ÑŠÐµÐºÑ‚Ð° Ð´Ð»Ñ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹ Ñ Ð´Ð¾ÑÑ‚Ð°Ð²ÐºÐ¾Ð¹/Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‚Ð¾Ð¼
      * 
      * @param int $orderId
      * @return \Safecrow\Shipping
@@ -75,7 +75,7 @@ class Orders
     }
     
     /**
-     * Ïîëó÷åíèå îáúåêòà äëÿ ðàáîòû ñ ïåðåõîäàìè
+     * ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ð¾Ð±ÑŠÐµÐºÑ‚Ð° Ð´Ð»Ñ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹ Ñ Ð¿ÐµÑ€ÐµÑ…Ð¾Ð´Ð°Ð¼Ð¸
      * 
      * @param int $orderId
      * @return \Safecrow\Transitions
@@ -86,7 +86,7 @@ class Orders
     }
     
     /**
-     * Ñîçäàíèå íîâîãî çàêàçà
+     * Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð½Ð¾Ð²Ð¾Ð³Ð¾ Ð·Ð°ÐºÐ°Ð·Ð°
      * 
      * @param array $order
      * @return array
@@ -112,7 +112,7 @@ class Orders
     }
     
     /**
-     * Ïðåäâàðèòåëüíûé ðàñ÷åò êîìèññèè
+     * ÐŸÑ€ÐµÐ´Ð²Ð°Ñ€Ð¸Ñ‚ÐµÐ»ÑŒÐ½Ñ‹Ð¹ Ñ€Ð°ÑÑ‡ÐµÑ‚ ÐºÐ¾Ð¼Ð¸ÑÑÐ¸Ð¸
      * 
      * @param float $sum
      * @param string $payer
@@ -131,7 +131,7 @@ class Orders
     }
     
     /**
-     * Ðåäàêòèðîâàíèå çàêàçà
+     * Ð ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð·Ð°ÐºÐ°Ð·Ð°
      * 
      * @param int $orderId
      * @param array $fields
@@ -150,7 +150,7 @@ class Orders
     }
     
     /**
-     * Ïîëó÷åíèå ñïèñêà çàêàçîâ
+     * ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ ÑÐ¿Ð¸ÑÐºÐ° Ð·Ð°ÐºÐ°Ð·Ð¾Ð²
      * 
      * @param int $page
      * @param int $per
@@ -174,7 +174,7 @@ class Orders
     }
     
     /**
-     * Ïîëó÷åíèå çàêàçà ïî ID
+     * ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ð·Ð°ÐºÐ°Ð·Ð° Ð¿Ð¾ ID
      * 
      * @param int $id
      * @return boolean|array
@@ -191,7 +191,7 @@ class Orders
     }
     
     /**
-     * Âàëèäàöèÿ ïîëåé çàêàçà
+     * Ð’Ð°Ð»Ð¸Ð´Ð°Ñ†Ð¸Ñ Ð¿Ð¾Ð»ÐµÐ¹ Ð·Ð°ÐºÐ°Ð·Ð°
      * 
      * @param array $order
      * @throws \Safecrow\Exceptions\OrderCreateException
@@ -202,19 +202,19 @@ class Orders
         $arErrors = array();
         
         if(empty($order['order_description'])) {
-            $arErrors['order_description'] = 'Íå çàïîëíåíî îïèñàíèå ñäåëêè';
+            $arErrors['order_description'] = 'ÐÐµ Ð·Ð°Ð¿Ð¾Ð»Ð½ÐµÐ½Ð¾ Ð¾Ð¿Ð¸ÑÐ°Ð½Ð¸Ðµ ÑÐ´ÐµÐ»ÐºÐ¸';
         }
         
         if(!isset($order['cost']) || !(float)($order['cost'])) {
-            $arErrors['cost'] = 'Íå óêàçàíà ñòîèìîñòü ñäåëêè';
+            $arErrors['cost'] = 'ÐÐµ ÑƒÐºÐ°Ð·Ð°Ð½Ð° ÑÑ‚Ð¾Ð¸Ð¼Ð¾ÑÑ‚ÑŒ ÑÐ´ÐµÐ»ÐºÐ¸';
         }
         
         if(!isset($order['commission_payer']) || !in_array($order['commission_payer'], Payers::getPayers())) {
-            $arErrors['commission_payer'] = 'Íåäîïóñòèìûé òèï ïëàòåëüùèêà';
+            $arErrors['commission_payer'] = 'ÐÐµÐ´Ð¾Ð¿ÑƒÑÑ‚Ð¸Ð¼Ñ‹Ð¹ Ñ‚Ð¸Ð¿ Ð¿Ð»Ð°Ñ‚ÐµÐ»ÑŒÑ‰Ð¸ÐºÐ°';
         }
         
         if(!empty($arErrors)) {
-            $ex = new OrderCreateException("Íåçàïîëíåíû îáÿçàòåëüíûå ïîëÿ"); 
+            $ex = new OrderCreateException("ÐÐµÐ·Ð°Ð¿Ð¾Ð»Ð½ÐµÐ½Ñ‹ Ð¾Ð±ÑÐ·Ð°Ñ‚ÐµÐ»ÑŒÐ½Ñ‹Ðµ Ð¿Ð¾Ð»Ñ"); 
             $ex->setData($arErrors);
             
             throw $ex;
@@ -222,14 +222,14 @@ class Orders
     }
     
     /**
-     * Ïðîâåðÿåò ñîäåðæèìîå ìàññèâà
+     * ÐŸÑ€Ð¾Ð²ÐµÑ€ÑÐµÑ‚ ÑÐ¾Ð´ÐµÑ€Ð¶Ð¸Ð¼Ð¾Ðµ Ð¼Ð°ÑÑÐ¸Ð²Ð°
      * @param array files
      * @throws \Safecrow\Exceptions\IncorrectAttachmentException
      * @return array
      */
     private function processFiles(array $files)
     {
-        //Åñëè ïåðåäàëè óðëû, òî ïîïûòàåìñÿ ïîëó÷èòü èíôó î ôàéëå
+        //Ð•ÑÐ»Ð¸ Ð¿ÐµÑ€ÐµÐ´Ð°Ð»Ð¸ ÑƒÑ€Ð»Ñ‹, Ñ‚Ð¾ Ð¿Ð¾Ð¿Ñ‹Ñ‚Ð°ÐµÐ¼ÑÑ Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ Ð¸Ð½Ñ„Ñƒ Ð¾ Ñ„Ð°Ð¹Ð»Ðµ
         foreach ($files as $k => $file) {
             if(is_string($file)) {
                 $files[$k] = FilesHelper::prepareFile($file);

@@ -21,8 +21,8 @@ class Billing extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ïðîñòàâëåíèå ïëàòåæíîé èíôîðìàöèè òåêóùåãî ïîëüçîâàòåëÿ
-     * Âíèìàíèå! Ïàðàìåòðû íå íóæíî çàâîðà÷èâàòü â ïåðåìåííåóþ billing_info
+     * ÐŸÑ€Ð¾ÑÑ‚Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ Ð¿Ð»Ð°Ñ‚ÐµÐ¶Ð½Ð¾Ð¹ Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ð¸ Ñ‚ÐµÐºÑƒÑ‰ÐµÐ³Ð¾ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»Ñ
+     * Ð’Ð½Ð¸Ð¼Ð°Ð½Ð¸Ðµ! ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð½Ðµ Ð½ÑƒÐ¶Ð½Ð¾ Ð·Ð°Ð²Ð¾Ñ€Ð°Ñ‡Ð¸Ð²Ð°Ñ‚ÑŒ Ð² Ð¿ÐµÑ€ÐµÐ¼ÐµÐ½Ð½ÐµÑƒÑŽ billing_info
      * 
      * @param array $fields
      * @return array
@@ -47,7 +47,7 @@ class Billing extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Âàëèäàöèÿ ïîëåé ïëàòåæíîé èíôîðìàöèè
+     * Ð’Ð°Ð»Ð¸Ð´Ð°Ñ†Ð¸Ñ Ð¿Ð¾Ð»ÐµÐ¹ Ð¿Ð»Ð°Ñ‚ÐµÐ¶Ð½Ð¾Ð¹ Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ð¸
      * 
      * @param array $fields
      * @throws \Safecrow\Exceptions\BillingException
@@ -56,45 +56,45 @@ class Billing extends \PHPUnit_Framework_TestCase
     {
         $arErrors = array();
         if(!isset($fields['holder_type']) || !in_array($fields['holder_type'], PayerTypes::getPayerTypes())) {
-            $arErrors['holder_type'] = 'Íåêîððåêòíûé òèï ïëàòåëüùèêà';
+            $arErrors['holder_type'] = 'ÐÐµÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ñ‹Ð¹ Ñ‚Ð¸Ð¿ Ð¿Ð»Ð°Ñ‚ÐµÐ»ÑŒÑ‰Ð¸ÐºÐ°';
         }
         
         if(!isset($fields['billing_type']) ||  !in_array($fields['billing_type'], PaymentTypes::getPaymentTypes())) {
-            $arErrors['billing_type'] = 'Íåäîïóñòèìûé òèï îïëàòû';
+            $arErrors['billing_type'] = 'ÐÐµÐ´Ð¾Ð¿ÑƒÑÑ‚Ð¸Ð¼Ñ‹Ð¹ Ñ‚Ð¸Ð¿ Ð¾Ð¿Ð»Ð°Ñ‚Ñ‹';
         }
         
         if(empty($fields['payment_params']['bik'])) {
-            $arErrors['payment_params']['bik'] = "Íå óêàçàí ÁÈÊ";
+            $arErrors['payment_params']['bik'] = "ÐÐµ ÑƒÐºÐ°Ð·Ð°Ð½ Ð‘Ð˜Ðš";
         }
         
         if(empty($fields['payment_params']['account'])) {
-            $arErrors['payment_params']['account'] = "Íå óêàçàí ðàñ÷åòíûé ñ÷åò";
+            $arErrors['payment_params']['account'] = "ÐÐµ ÑƒÐºÐ°Ð·Ð°Ð½ Ñ€Ð°ÑÑ‡ÐµÑ‚Ð½Ñ‹Ð¹ ÑÑ‡ÐµÑ‚";
         }
         
         
         
         if(isset($fields['holder_type']) && isset($fields['billing_type'])) {
             if(empty($fields['payment_params']['name']) && $fields['holder_type'] == PayerTypes::PERSONAL) {
-                $arErrors['payment_params']['name'] = "Íå óêàçàíî èìÿ ïëàòåëüùèêà";
+                $arErrors['payment_params']['name'] = "ÐÐµ ÑƒÐºÐ°Ð·Ð°Ð½Ð¾ Ð¸Ð¼Ñ Ð¿Ð»Ð°Ñ‚ÐµÐ»ÑŒÑ‰Ð¸ÐºÐ°";
             }    
             
             if($fields['holder_type'] == PayerTypes::BUSINESS && $fields['billing_type'] == PaymentTypes::BANK_ACCOUNT) {
                 if(empty($fields['payment_params']['organization'])) {
-                    $arErrors['payment_params']['organization'] = 'Íå óêàçàíî íàçâàíèå îãðàíèçàöèè';
+                    $arErrors['payment_params']['organization'] = 'ÐÐµ ÑƒÐºÐ°Ð·Ð°Ð½Ð¾ Ð½Ð°Ð·Ð²Ð°Ð½Ð¸Ðµ Ð¾Ð³Ñ€Ð°Ð½Ð¸Ð·Ð°Ñ†Ð¸Ð¸';
                 }
                 
                 if(empty($fields['payment_params']['ogrn'])) {
-                    $arErrors['payment_params']['ogrn'] = 'Íå óêàçàí ÎÃÐÍ';
+                    $arErrors['payment_params']['ogrn'] = 'ÐÐµ ÑƒÐºÐ°Ð·Ð°Ð½ ÐžÐ“Ð Ð';
                 }
         
                 if(empty($fields['payment_params']['inn'])) {
-                    $arErrors['payment_params']['inn'] = 'Íå óêàçàí ÈÍÍ';
+                    $arErrors['payment_params']['inn'] = 'ÐÐµ ÑƒÐºÐ°Ð·Ð°Ð½ Ð˜ÐÐ';
                 }
             }
         }
         
         if(!empty($arErrors)) {
-            $ex = new BillingException('Íå çàïîëíåíû îáÿçàòåëüíûå ïîëÿ');
+            $ex = new BillingException('ÐÐµ Ð·Ð°Ð¿Ð¾Ð»Ð½ÐµÐ½Ñ‹ Ð¾Ð±ÑÐ·Ð°Ñ‚ÐµÐ»ÑŒÐ½Ñ‹Ðµ Ð¿Ð¾Ð»Ñ');
             $ex->setData($arErrors);
             
             throw $ex;

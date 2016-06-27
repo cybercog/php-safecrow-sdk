@@ -64,7 +64,7 @@ class PaymetsTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Получение информации об оплате
+     * РџРѕР»СѓС‡РµРЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё РѕР± РѕРїР»Р°С‚Рµ
      * 
      * @test
      * @covers Payments::getInfo
@@ -77,7 +77,7 @@ class PaymetsTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Неудачная попытка создания счета из-за некорректного статуса заказа
+     * РќРµСѓРґР°С‡РЅР°СЏ РїРѕРїС‹С‚РєР° СЃРѕР·РґР°РЅРёСЏ СЃС‡РµС‚Р° РёР·-Р·Р° РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРіРѕ СЃС‚Р°С‚СѓСЃР° Р·Р°РєР°Р·Р°
      * 
      * @test
      * @covers Payments::createBill
@@ -89,7 +89,7 @@ class PaymetsTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Создание счета
+     * РЎРѕР·РґР°РЅРёРµ СЃС‡РµС‚Р°
      * 
      * @test
      * @covers Payments::createBill
@@ -103,7 +103,7 @@ class PaymetsTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Получение счета
+     * РџРѕР»СѓС‡РµРЅРёРµ СЃС‡РµС‚Р°
      * 
      * @test
      * @covers Payments::getBill
@@ -116,7 +116,7 @@ class PaymetsTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Получение ссылки на счет
+     * РџРѕР»СѓС‡РµРЅРёРµ СЃСЃС‹Р»РєРё РЅР° СЃС‡РµС‚
      * 
      * @test
      * @covers Payments::downloadInvoice

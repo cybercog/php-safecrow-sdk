@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Safecrow\Tests;
 
 use Safecrow;
@@ -32,7 +32,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ðåãèñòðàöèÿ ïîëüçîâàòåëÿ ñ email-îì
+     * Ð ÐµÐ³Ð¸ÑÑ‚Ñ€Ð°Ñ†Ð¸Ñ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»Ñ Ñ email-Ð¾Ð¼
      * 
      * @test
      * @covers Users::reg
@@ -54,7 +54,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ðåãèñòðàöèÿ ïîëüçîâàòåëÿ ñ òåëåôîíîì
+     * Ð ÐµÐ³Ð¸ÑÑ‚Ñ€Ð°Ñ†Ð¸Ñ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»Ñ Ñ Ñ‚ÐµÐ»ÐµÑ„Ð¾Ð½Ð¾Ð¼
      * 
      * @test
      * @covers Users::reg
@@ -76,7 +76,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ïîïûòêà ðåãèñòðàöèÿ ïîëüçîâàòåëÿ áåç email è òåëåôîíà
+     * ÐŸÐ¾Ð¿Ñ‹Ñ‚ÐºÐ° Ñ€ÐµÐ³Ð¸ÑÑ‚Ñ€Ð°Ñ†Ð¸Ñ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»Ñ Ð±ÐµÐ· email Ð¸ Ñ‚ÐµÐ»ÐµÑ„Ð¾Ð½Ð°
      * 
      * @test
      * @covers Users::reg
@@ -92,7 +92,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ïîïûòêà ðåãèñòðàöèè áåç ñîãëàñèÿ ñ óñëîâèÿìè
+     * ÐŸÐ¾Ð¿Ñ‹Ñ‚ÐºÐ° Ñ€ÐµÐ³Ð¸ÑÑ‚Ñ€Ð°Ñ†Ð¸Ð¸ Ð±ÐµÐ· ÑÐ¾Ð³Ð»Ð°ÑÐ¸Ñ Ñ ÑƒÑÐ»Ð¾Ð²Ð¸ÑÐ¼Ð¸
      * 
      * @test
      * @covers Users::reg
@@ -108,7 +108,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Íåóäà÷íàÿ ïîïûòêà àâòîðèçàöèè
+     * ÐÐµÑƒÐ´Ð°Ñ‡Ð½Ð°Ñ Ð¿Ð¾Ð¿Ñ‹Ñ‚ÐºÐ° Ð°Ð²Ñ‚Ð¾Ñ€Ð¸Ð·Ð°Ñ†Ð¸Ð¸
      * 
      * @test
      * @covers Users::auth
@@ -122,7 +122,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Óäà÷íàÿ ïîïûòêà àâòîðèçàöèè
+     * Ð£Ð´Ð°Ñ‡Ð½Ð°Ñ Ð¿Ð¾Ð¿Ñ‹Ñ‚ÐºÐ° Ð°Ð²Ñ‚Ð¾Ñ€Ð¸Ð·Ð°Ñ†Ð¸Ð¸
      * 
      * @test
      * @covers Users::auth
@@ -141,7 +141,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ïîëó÷åíèå access_token
+     * ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ access_token
      * 
      * @test
      * @covers Users::getUserToken()
@@ -154,7 +154,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ïîèñê ïîëüçîâàòåëÿ ïî òåëåôîíó
+     * ÐŸÐ¾Ð¸ÑÐº Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»Ñ Ð¿Ð¾ Ñ‚ÐµÐ»ÐµÑ„Ð¾Ð½Ñƒ
      * 
      * @test
      * @covers Users::getByPhone
@@ -175,7 +175,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ïîèñê ïîëüçîâàòåëÿ ïî email
+     * ÐŸÐ¾Ð¸ÑÐº Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»Ñ Ð¿Ð¾ email
      * 
      * @test
      * @covers Users::getByEmail
@@ -196,7 +196,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ïîèñê ïî ïóñòîìó email
+     * ÐŸÐ¾Ð¸ÑÐº Ð¿Ð¾ Ð¿ÑƒÑÑ‚Ð¾Ð¼Ñƒ email
      * 
      * @test
      * @covers Users::getByEmail
@@ -210,7 +210,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ïîèñê ïî ïóñòîìó òåëåôîíó
+     * ÐŸÐ¾Ð¸ÑÐº Ð¿Ð¾ Ð¿ÑƒÑÑ‚Ð¾Ð¼Ñƒ Ñ‚ÐµÐ»ÐµÑ„Ð¾Ð½Ñƒ
      * 
      * @test
      * @covers Users::getByPhone
@@ -224,7 +224,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ïîèñê ïî íåêîððåêòíîìó email
+     * ÐŸÐ¾Ð¸ÑÐº Ð¿Ð¾ Ð½ÐµÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ð¾Ð¼Ñƒ email
      * 
      * @test
      * @covers Users::getByEmail
@@ -238,7 +238,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ïîïûòêà ïîèñêà ïî íåñóùåñòâóþùåìó email
+     * ÐŸÐ¾Ð¿Ñ‹Ñ‚ÐºÐ° Ð¿Ð¾Ð¸ÑÐºÐ° Ð¿Ð¾ Ð½ÐµÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÑŽÑ‰ÐµÐ¼Ñƒ email
      * 
      * @test
      * @covers Users::getByEmail
@@ -252,7 +252,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ïîïûòêà ïîèñêà ïî íåñóùåñòâóþùåìó òåëåôîíó
+     * ÐŸÐ¾Ð¿Ñ‹Ñ‚ÐºÐ° Ð¿Ð¾Ð¸ÑÐºÐ° Ð¿Ð¾ Ð½ÐµÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÑŽÑ‰ÐµÐ¼Ñƒ Ñ‚ÐµÐ»ÐµÑ„Ð¾Ð½Ñƒ
      * 
      * @test
      * @covers Users::getByPhone

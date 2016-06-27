@@ -15,7 +15,7 @@ class Subscriptions
     }
     
     /**
-     * Создание подписки
+     * РЎРѕР·РґР°РЅРёРµ РїРѕРґРїРёСЃРєРё
      * 
      * @param string $url
      * @param array $states
@@ -25,11 +25,11 @@ class Subscriptions
     public function subscribe($url, array $states, $subscribeId = null)
     {
         if(empty($url)) {
-            throw new SubscriptionsException("Не указан url");
+            throw new SubscriptionsException("РќРµ СѓРєР°Р·Р°РЅ url");
         }
         
         if(empty($states) || !is_array($states)) {
-            throw new SubscriptionsException("Не указаны статусы");
+            throw new SubscriptionsException("РќРµ СѓРєР°Р·Р°РЅС‹ СЃС‚Р°С‚СѓСЃС‹");
         }
         
         $data = array(
@@ -47,7 +47,7 @@ class Subscriptions
     }
     
     /**
-     * Получение списка подписок
+     * РџРѕР»СѓС‡РµРЅРёРµ СЃРїРёСЃРєР° РїРѕРґРїРёСЃРѕРє
      * 
      * @return array
      */
@@ -59,7 +59,7 @@ class Subscriptions
     }
     
     /**
-     * Удаление подписки
+     * РЈРґР°Р»РµРЅРёРµ РїРѕРґРїРёСЃРєРё
      * 
      * @param string $subscribeId
      * @return bool|array
@@ -72,7 +72,7 @@ class Subscriptions
     }
     
     /**
-     * Подверждение подписки
+     * РџРѕРґРІРµСЂР¶РґРµРЅРёРµ РїРѕРґРїРёСЃРєРё
      * 
      * @param string $subscribeId
      * @return bool|array

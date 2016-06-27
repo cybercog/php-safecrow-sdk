@@ -1,4 +1,5 @@
-<? 
+<?php
+
 namespace Safecrow\Http;
 
 use Safecrow\App;
@@ -15,17 +16,17 @@ class Query
         $sStatus = 0,
         
         $sUserAgent = 'MGN API Query',
-        $sPostData = [],
-        $arHeaders = [],
-        $arAddHeaders = [],
-        $arAddParams = [],
-        $arHTTPAuthData = [],
+        $sPostData = array(),
+        $arHeaders = array(),
+        $arAddHeaders = array(),
+        $arAddParams = array(),
+        $arHTTPAuthData = array(),
         
-        $arInfo = []
+        $arInfo = array()
     ;
     
     /**
-     * Инициализация запроса
+     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ Р·Р°РїСЂРѕСЃР°
      * @param string $method
      * @param string $url
      */
@@ -36,7 +37,7 @@ class Query
     }
     
     /**
-     * Выполняет запрос
+     * Р’С‹РїРѕР»РЅСЏРµС‚ Р·Р°РїСЂРѕСЃ
      * @return boolean|mixed
      */
     public function exec()
@@ -74,11 +75,23 @@ class Query
             
             $res = curl_exec($ch);
             
-            //Получим всю инфу по запросу
+            //РџРѕР»СѓС‡РёРј РІСЃСЋ РёРЅС„Сѓ РїРѕ Р·Р°РїСЂРѕСЃСѓ
             $this->arInfo = curl_getinfo($ch);
             $this->sStatus = $this->arInfo['http_code'];
 
             curl_close($ch);
+			
+			$logger = new Logger('tests');
+            $logger->pushHandler(new StreamHandler('Logs/rest.log', Logger::INFO));
+            
+            $logger->info(json_encode([
+                'method' => $this->sMethod,
+                'request' => $this->sUrl,
+                'data' => $this->sPostData,
+                'response' => $this->arInfo,
+                'responseData' => $res
+            ]));
+			
             if(strpos($this->arInfo['content_type'], "application/json") !== false) {
                 return json_decode($res, 1);
             } else {
@@ -90,23 +103,10 @@ class Query
         {
             return false;
         }
-        finally 
-        {
-            $logger = new Logger('tests');
-            $logger->pushHandler(new StreamHandler('Logs/rest.log', Logger::INFO));
-            
-            $logger->info(json_encode([
-                'method' => $this->sMethod,
-                'request' => $this->sUrl,
-                'data' => $this->sPostData,
-                'response' => $this->arInfo,
-                'responseData' => $res
-            ]));
-        }
     }
     
     /**
-     * Устанавливает данные запроса
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РґР°РЅРЅС‹Рµ Р·Р°РїСЂРѕСЃР°
      * @param array $arPostData
      */
     public function setPostData(array $arPostData)
@@ -115,7 +115,7 @@ class Query
     }
     
     /**
-     * Устанавливае данные HTTP basic Auth
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°Рµ РґР°РЅРЅС‹Рµ HTTP basic Auth
      * @param $sLogin
      * @param sPass 
      */

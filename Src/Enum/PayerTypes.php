@@ -9,7 +9,7 @@ class PayerTypes
     
     public static function getPayerTypes()
     {
-        $oReflection = new \ReflectionClass(self::class);
+        $oReflection = new \ReflectionClass(__CLASS__);
         return $oReflection->getConstants();
     }
 }

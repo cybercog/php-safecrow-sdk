@@ -14,7 +14,7 @@ class ClaimReasons
     
     public static function getClaimReasons()
     {
-        $oReflect = new \ReflectionClass(self::class);
+        $oReflect = new \ReflectionClass(__CLASS__);
         return $oReflect->getConstants();
     }
 }

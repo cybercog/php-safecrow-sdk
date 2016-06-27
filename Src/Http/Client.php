@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Safecrow\Http;
 
 class Client

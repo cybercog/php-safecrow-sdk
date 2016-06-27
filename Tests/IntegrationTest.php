@@ -31,7 +31,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * ðåãèñòðàöèÿ 2 þçåðîâ -> ñîçäàíèå ñäåëêè -> ïîäòâåðæäåíèå è îïëàòà -> îòïðàâêà -> ïðèåì
+     * Ñ€ÐµÐ³Ð¸ÑÑ‚Ñ€Ð°Ñ†Ð¸Ñ 2 ÑŽÐ·ÐµÑ€Ð¾Ð² -> ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ðµ ÑÐ´ÐµÐ»ÐºÐ¸ -> Ð¿Ð¾Ð´Ñ‚Ð²ÐµÑ€Ð¶Ð´ÐµÐ½Ð¸Ðµ Ð¸ Ð¾Ð¿Ð»Ð°Ñ‚Ð° -> Ð¾Ñ‚Ð¿Ñ€Ð°Ð²ÐºÐ° -> Ð¿Ñ€Ð¸ÐµÐ¼
      * 
      * @test
      */
@@ -39,7 +39,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
     {
         $app = new App();
         
-        //Ñîçäàíèå ïîëüçîâàòåëåé
+        //Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÐµÐ¹
         $supplier = $app->getUsers()->reg(array(
             'name' => "supplier",
             'email' => "supplier".rand(0,1000)."@test.ru",
@@ -57,7 +57,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($supplier['id']);
         $this->assertNotEmpty($consumer['id']);
         
-        //Ñîçäàíèå ñäåëêè
+        //Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ ÑÐ´ÐµÐ»ÐºÐ¸
         $order = $app->getOrders($supplier['id'])->create(array(
             'title' => 'Order test #'.rand(1,9999),
             'order_description' => 'order description',
@@ -70,7 +70,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         
         $this->assertNotEmpty($order['id']);
         
-        //Ïëàòåæíàÿ èíôîðìàöèÿ
+        //ÐŸÐ»Ð°Ñ‚ÐµÐ¶Ð½Ð°Ñ Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ñ
         $supplierBillingInfo = $app->getOrders($supplier['id'])->getBilling($order['id'])->create(array(
             'holder_type' => PayerTypes::PERSONAL,
             'billing_type' => PaymentTypes::BANK_ACCOUNT,
@@ -95,7 +95,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         self::$logger->info(print_r($consumerBillingInfo,1));
         $this->assertNotEmpty($consumerBillingInfo['id']);
         
-        //Ïîäòâåðæäåíèå è îïëàòà
+        //ÐŸÐ¾Ð´Ñ‚Ð²ÐµÑ€Ð¶Ð´ÐµÐ½Ð¸Ðµ Ð¸ Ð¾Ð¿Ð»Ð°Ñ‚Ð°
         $bill = $app->getOrders($consumer['id'])->getPayments($order['id'])->createBill("Ivanov Ivan");
         self::$logger->info(print_r($bill,1));
         $this->assertNotEmpty($bill['id']);
@@ -104,7 +104,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         self::$logger->info(print_r($transitionState,1));
         $this->assertEquals($transitionState, true);
         
-        //Æäåì ïîêà ïåðåâåäåòñÿ ñòàòóñ
+        //Ð–Ð´ÐµÐ¼ Ð¿Ð¾ÐºÐ° Ð¿ÐµÑ€ÐµÐ²ÐµÐ´ÐµÑ‚ÑÑ ÑÑ‚Ð°Ñ‚ÑƒÑ
         while(true)
         {
             sleep(10);
@@ -114,26 +114,26 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
             }
         }
         
-        //Ñîçäàíèå äîñòàâêè
+        //Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð´Ð¾ÑÑ‚Ð°Ð²ÐºÐ¸
         $shipping = $app->getOrders($supplier['id'])->getShipping($order['id'])->create(array(
             "company" => "Delivery Club"
         ));
         self::$logger->info(print_r($shipping,1));
         $this->assertNotEmpty($shipping['id']);
         
-        //Ïåðåäàåì â äîñòàâêó
+        //ÐŸÐµÑ€ÐµÐ´Ð°ÐµÐ¼ Ð² Ð´Ð¾ÑÑ‚Ð°Ð²ÐºÑƒ
         $transitionState = $app->getOrders($supplier['id'])->getTransitions($order['id'])->doTransition("shipping");
         self::$logger->info(print_r($transitionState,1));
         $this->assertEquals($transitionState, true);
 
-        //Ïîäòâåðæäàåì
+        //ÐŸÐ¾Ð´Ñ‚Ð²ÐµÑ€Ð¶Ð´Ð°ÐµÐ¼
         $transitionState = $app->getOrders($consumer['id'])->getTransitions($order['id'])->doTransition("received");
         self::$logger->info(print_r($transitionState,1));
         $this->assertEquals($transitionState, true);
     }
     
     /**
-     * ðåãèñòðàöèÿ 2 þçåðîâ -> ñîçäàíèå ñäåëêè -> ïîäòâåðæäåíèå è îïëàòà -> îòïðàâêà -> æàëîáà -> çàïðîñ âîçâðàòà -> ïîäòâåðæäåíèå âîçâðàòà -> îòïðàâêà íàçàä -> ïîëó÷åíèå ïðîäàâöîì îáðàòíî
+     * Ñ€ÐµÐ³Ð¸ÑÑ‚Ñ€Ð°Ñ†Ð¸Ñ 2 ÑŽÐ·ÐµÑ€Ð¾Ð² -> ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ðµ ÑÐ´ÐµÐ»ÐºÐ¸ -> Ð¿Ð¾Ð´Ñ‚Ð²ÐµÑ€Ð¶Ð´ÐµÐ½Ð¸Ðµ Ð¸ Ð¾Ð¿Ð»Ð°Ñ‚Ð° -> Ð¾Ñ‚Ð¿Ñ€Ð°Ð²ÐºÐ° -> Ð¶Ð°Ð»Ð¾Ð±Ð° -> Ð·Ð°Ð¿Ñ€Ð¾Ñ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‚Ð° -> Ð¿Ð¾Ð´Ñ‚Ð²ÐµÑ€Ð¶Ð´ÐµÐ½Ð¸Ðµ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‚Ð° -> Ð¾Ñ‚Ð¿Ñ€Ð°Ð²ÐºÐ° Ð½Ð°Ð·Ð°Ð´ -> Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ð¿Ñ€Ð¾Ð´Ð°Ð²Ñ†Ð¾Ð¼ Ð¾Ð±Ñ€Ð°Ñ‚Ð½Ð¾
      * 
      * @test
      */
@@ -141,7 +141,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
     {
         $app = new App();
         
-        //Ñîçäàíèå ïîëüçîâàòåëåé
+        //Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÐµÐ¹
         $supplier = $app->getUsers()->reg(array(
             'name' => "supplier",
             'email' => "supplier".rand(0,1000)."@test.ru",
@@ -159,7 +159,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($supplier['id']);
         $this->assertNotEmpty($consumer['id']);
         
-        //Ñîçäàíèå ñäåëêè
+        //Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ ÑÐ´ÐµÐ»ÐºÐ¸
         $order = $app->getOrders($supplier['id'])->create(array(
             'title' => 'Order test #'.rand(1,9999),
             'order_description' => 'order description',
@@ -172,7 +172,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         
         $this->assertNotEmpty($order['id']);
         
-        //Ïëàòåæíàÿ èíôîðìàöèÿ
+        //ÐŸÐ»Ð°Ñ‚ÐµÐ¶Ð½Ð°Ñ Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ñ
         $supplierBillingInfo = $app->getOrders($supplier['id'])->getBilling($order['id'])->create(array(
             'holder_type' => PayerTypes::PERSONAL,
             'billing_type' => PaymentTypes::BANK_ACCOUNT,
@@ -197,7 +197,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         self::$logger->info(print_r($consumerBillingInfo,1));
         $this->assertNotEmpty($consumerBillingInfo['id']);
         
-        //Ïîäòâåðæäåíèå è îïëàòà
+        //ÐŸÐ¾Ð´Ñ‚Ð²ÐµÑ€Ð¶Ð´ÐµÐ½Ð¸Ðµ Ð¸ Ð¾Ð¿Ð»Ð°Ñ‚Ð°
         $bill = $app->getOrders($consumer['id'])->getPayments($order['id'])->createBill("Ivanov Ivan");
         self::$logger->info(print_r($bill,1));
         $this->assertNotEmpty($bill['id']);
@@ -206,7 +206,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         self::$logger->info(print_r($transitionState,1));
         $this->assertEquals($transitionState, true);
         
-        //Æäåì ïîêà ïåðåâåäåòñÿ ñòàòóñ
+        //Ð–Ð´ÐµÐ¼ Ð¿Ð¾ÐºÐ° Ð¿ÐµÑ€ÐµÐ²ÐµÐ´ÐµÑ‚ÑÑ ÑÑ‚Ð°Ñ‚ÑƒÑ
         while(true)
         {
             sleep(10);
@@ -216,19 +216,19 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
             }
         }
         
-        //Ñîçäàíèå äîñòàâêè
+        //Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð´Ð¾ÑÑ‚Ð°Ð²ÐºÐ¸
         $shipping = $app->getOrders($supplier['id'])->getShipping($order['id'])->create(array(
             "company" => "Delivery Club"
         ));
         self::$logger->info(print_r($shipping,1));
         $this->assertNotEmpty($shipping['id']);
         
-        //Ïåðåäàåì â äîñòàâêó
+        //ÐŸÐµÑ€ÐµÐ´Ð°ÐµÐ¼ Ð² Ð´Ð¾ÑÑ‚Ð°Ð²ÐºÑƒ
         $transitionState = $app->getOrders($supplier['id'])->getTransitions($order['id'])->doTransition("shipping");
         self::$logger->info(print_r($transitionState,1));
         $this->assertEquals($transitionState, true);
         
-        //Ñîçäàíèå æàëîáû
+        //Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð¶Ð°Ð»Ð¾Ð±Ñ‹
         $claim = $app->getOrders($consumer['id'])->getClaims($order['id'])->create(array(
             "reason" => ClaimReasons::PACKAGE_BROKEN,
             "description" => "Lorem ipsum sit dolor"
@@ -240,7 +240,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         self::$logger->info(print_r($transitionState,1));
         $this->assertEquals($transitionState, true);
         
-        //Âîçâðàò çàêàçà
+        //Ð’Ð¾Ð·Ð²Ñ€Ð°Ñ‚ Ð·Ð°ÐºÐ°Ð·Ð°
         $changes = $app->getOrders($consumer['id'])->getChanges($order['id'])->create(array(
             'change_type' => ChangeTypes::PURCHASE_RETURN
         ));
@@ -250,7 +250,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         $changeState = $app->getOrders($supplier['id'])->getChanges($order['id'])->confirm($changes['id']);
         self::$logger->info(print_r($changeState,1));
         
-        //Îôîðìëÿåì âîçâðàò
+        //ÐžÑ„Ð¾Ñ€Ð¼Ð»ÑÐµÐ¼ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‚
         $shipping = $app->getOrders($consumer['id'])->getShipping($order['id'])->create(array(
             "company" => "Delivery Club"
         ), true);
@@ -261,7 +261,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         self::$logger->info(print_r($transitionState,1));
         $this->assertEquals($transitionState, true);
         
-        //Òîâàð âîçâðàùåí
+        //Ð¢Ð¾Ð²Ð°Ñ€ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‰ÐµÐ½
         $transitionState = $app->getOrders($consumer['id'])->getTransitions($order['id'])->doTransition("returned");
         self::$logger->info(print_r($transitionState,1));
         $this->assertEquals($transitionState, true);

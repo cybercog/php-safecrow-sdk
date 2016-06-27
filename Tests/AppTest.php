@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Safecrow\Tests;
 
 use Safecrow\App;
@@ -10,7 +10,7 @@ use Safecrow\Subscriptions;
 class AppTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Êîððåêòíîñòü ñîçäàíèÿ ýêçåìïëÿðà êëàññà ïðèëîæåíèÿ
+     * ÐšÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ð¾ÑÑ‚ÑŒ ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ñ ÑÐºÐ·ÐµÐ¼Ð¿Ð»ÑÑ€Ð° ÐºÐ»Ð°ÑÑÐ° Ð¿Ñ€Ð¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ñ
      * 
      * @test
      * @covers App::getHost()
@@ -25,7 +25,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ïîëó÷åíèå ýêçåìïëÿðà êëàññà äëÿ ðàáîòû ñ ïîëüçîâàòåëÿìè
+     * ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ ÑÐºÐ·ÐµÐ¼Ð¿Ð»ÑÑ€Ð° ÐºÐ»Ð°ÑÑÐ° Ð´Ð»Ñ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹ Ñ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑÐ¼Ð¸
      * 
      * @test
      * @covers App::getUsers()
@@ -37,7 +37,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ïîëó÷åíèå ýêçåìïëÿðà êëàññà äëÿ ðàáîòû ñ çàêàçàìè
+     * ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ ÑÐºÐ·ÐµÐ¼Ð¿Ð»ÑÑ€Ð° ÐºÐ»Ð°ÑÑÐ° Ð´Ð»Ñ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹ Ñ Ð·Ð°ÐºÐ°Ð·Ð°Ð¼Ð¸
      * @test
      * @covers App::getOrders($userId)
      */
@@ -57,7 +57,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Îøèáêà ïðè ïîëó÷åíèå ýêçåìïëÿðà êëàññà äëÿ ðàáîòû ñ ïîëüçîâàòåëÿìè
+     * ÐžÑˆÐ¸Ð±ÐºÐ° Ð¿Ñ€Ð¸ Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ ÑÐºÐ·ÐµÐ¼Ð¿Ð»ÑÑ€Ð° ÐºÐ»Ð°ÑÑÐ° Ð´Ð»Ñ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹ Ñ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑÐ¼Ð¸
      * @test
      * @covers App::getOrders($userId)
      * @expectedException Safecrow\Exceptions\AuthException
@@ -69,7 +69,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ïîëó÷åíèå ýêçåìïëÿðà êëàññà äëÿ ðàáîòû ñ ïîäïèñêàìè
+     * ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ ÑÐºÐ·ÐµÐ¼Ð¿Ð»ÑÑ€Ð° ÐºÐ»Ð°ÑÑÐ° Ð´Ð»Ñ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹ Ñ Ð¿Ð¾Ð´Ð¿Ð¸ÑÐºÐ°Ð¼Ð¸
      * @test
      * @covers App::getSubscriptions()
      */
@@ -80,7 +80,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
     }
    
     /**
-     * Ïðîâåðêà êîððåêòíîñòè òèïà ôàéëà
+     * ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° ÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ð¾ÑÑ‚Ð¸ Ñ‚Ð¸Ð¿Ð° Ñ„Ð°Ð¹Ð»Ð°
      * 
      * @test
      */

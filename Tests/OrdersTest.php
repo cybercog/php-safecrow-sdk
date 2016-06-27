@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Safecrow\Tests;
 
 use Safecrow\Exceptions\OrderCreateException;
@@ -54,7 +54,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Íåóäà÷íàÿ ïîïûòêà ñîçäàòü çàêàç
+     * ÐÐµÑƒÐ´Ð°Ñ‡Ð½Ð°Ñ Ð¿Ð¾Ð¿Ñ‹Ñ‚ÐºÐ° ÑÐ¾Ð·Ð´Ð°Ñ‚ÑŒ Ð·Ð°ÐºÐ°Ð·
      * 
      * @test
      * @covers Orders::create
@@ -68,7 +68,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ñîçäàíèå çàêàçà áåç óêàçàíèÿ ïîëüçîâàòåëÿ
+     * Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð·Ð°ÐºÐ°Ð·Ð° Ð±ÐµÐ· ÑƒÐºÐ°Ð·Ð°Ð½Ð¸Ñ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»Ñ
      * 
      * @test
      * @covers Orders::create
@@ -97,7 +97,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ñîçäàíèå çàêàçà ñ óêàçàíèåì òåêóùåãî ïîëüçîâàòåëÿ êàê ïîêóïàòåëÿ
+     * Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð·Ð°ÐºÐ°Ð·Ð° Ñ ÑƒÐºÐ°Ð·Ð°Ð½Ð¸ÐµÐ¼ Ñ‚ÐµÐºÑƒÑ‰ÐµÐ³Ð¾ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»Ñ ÐºÐ°Ðº Ð¿Ð¾ÐºÑƒÐ¿Ð°Ñ‚ÐµÐ»Ñ
      * 
      * @test
      * @covers Orders::create
@@ -123,7 +123,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ðàñ÷åò êîìèññèè
+     * Ð Ð°ÑÑ‡ÐµÑ‚ ÐºÐ¾Ð¼Ð¸ÑÑÐ¸Ð¸
      * 
      * @test
      * @covers Orders::calcComission
@@ -135,7 +135,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ðåäàêòèðîâàíèå çàêàçà
+     * Ð ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð·Ð°ÐºÐ°Ð·Ð°
      * 
      * @test
      * @covers Orders::editOrder
@@ -154,7 +154,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ïîëó÷åíèå ñïèñêà çàêàçîâ
+     * ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ ÑÐ¿Ð¸ÑÐºÐ° Ð·Ð°ÐºÐ°Ð·Ð¾Ð²
      * 
      * @test
      * @covers Orders::getList
@@ -176,7 +176,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ïîëó÷åíèå çàêàçà ïî Id
+     * ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ð·Ð°ÐºÐ°Ð·Ð° Ð¿Ð¾ Id
      * 
      * @test
      * @covers Orders::getById
@@ -189,7 +189,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ïîïûòêà ïîèñêà áåç Id çàêàçà
+     * ÐŸÐ¾Ð¿Ñ‹Ñ‚ÐºÐ° Ð¿Ð¾Ð¸ÑÐºÐ° Ð±ÐµÐ· Id Ð·Ð°ÐºÐ°Ð·Ð°
      * @test
      * @covers Orders::getById
      */
@@ -200,7 +200,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Ïîïûòêà ïîèñêà ñ íåñóùåñòâóþùèì Id
+     * ÐŸÐ¾Ð¿Ñ‹Ñ‚ÐºÐ° Ð¿Ð¾Ð¸ÑÐºÐ° Ñ Ð½ÐµÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÑŽÑ‰Ð¸Ð¼ Id
      * 
      * @test
      * @covers Orders::getById
@@ -213,7 +213,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
     
     
     /**
-     * Ïîëó÷åíèå äîñòóïà ê îñíîâíûì ýêçåìïëÿðàì âñïîìîãàòåëüíûõ êëàññîâ
+     * ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ð´Ð¾ÑÑ‚ÑƒÐ¿Ð° Ðº Ð¾ÑÐ½Ð¾Ð²Ð½Ñ‹Ð¼ ÑÐºÐ·ÐµÐ¼Ð¿Ð»ÑÑ€Ð°Ð¼ Ð²ÑÐ¿Ð¾Ð¼Ð¾Ð³Ð°Ñ‚ÐµÐ»ÑŒÐ½Ñ‹Ñ… ÐºÐ»Ð°ÑÑÐ¾Ð²
      *
      * @test
      * @covers Orders::getBillings
