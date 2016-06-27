@@ -64,7 +64,7 @@ class Client
     {
         $arSystem = array(
             'api_key' => $this->key,
-            'secret' => $this->secret,
+            'secret' => hash("sha256", $this->key.$this->secret.date('c')),
             'request_time' => date('c')
         );
         

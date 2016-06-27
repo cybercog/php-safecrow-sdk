@@ -31,10 +31,10 @@ class Shipping
             $fields['attachment'] = $this->processFiles($fields['attachment']);
         }
         
-        $shipping = $return ? "shipping_back" : "shippng";
+        $shipping = $return ? "shipping_back" : "shipping";
         $res = $this->getClient()->post("/orders/{$this->getOrderId()}/{$shipping}", array("tracking" => $fields));
         
-        return $res['tracking'] ?: $res;
+        return isset($res['tracking']) ? $res['tracking'] : $res;
     }
     
     /**
@@ -44,10 +44,10 @@ class Shipping
      */
     public function get($return = false)
     {
-        $shipping = $return ? "shipping_back" : "shippng";
+        $shipping = $return ? "shipping_back" : "shipping";
         $res = $this->getClient()->get("/orders/{$this->getOrderId()}/{$shipping}");
         
-        return $res['tracking'] ?: $res;
+        return isset($res['tracking']) ? $res['tracking'] : $res;
     }
     
     private function getClient()

@@ -20,26 +20,34 @@ use Monolog\Handler\StreamHandler;
 class OrdersTest extends \PHPUnit_Framework_TestCase
 {
     private static
-        $logger
-    ;
-    
-    private
+        $logger,
         $orders,
         $curUser,
         $otherUser
     ;
     
     /**
-     * @before
+     * @beforeClass
      */
-    public function createApp()
+    public static function createApp()
     {
         $app = new App();
         
-        $this->curUser = $app->getUsers()->getByEmail("test596@test.ru");
-        $this->otherUser = $app->getUsers()->getByEmail("test8443@test.ru");
+        $userName = "test". rand(0, 10000);
+        self::$curUser = $app->getUsers()->reg(array(
+            'name' => $userName,
+            'email' => $userName."@test.ru",
+            'accepts_conditions' => true
+        ));
         
-        $this->orders = $app->getOrders($this->curUser['id']);
+        $userName = "test". rand(0, 10000);
+        self::$otherUser = $app->getUsers()->reg(array(
+            'name' => $userName,
+            'email' => $userName."@test.ru",
+            'accepts_conditions' => true
+        ));
+        
+        self::$orders = $app->getOrders(self::$curUser['id']);
         
         self::$logger = new Logger('tests');
         self::$logger->pushHandler(new StreamHandler('Logs/orders.test.log', Logger::INFO));
@@ -54,7 +62,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
      */
     public function orderCreateUnsuccess()
     {
-        $this->orders->create(array(
+        self::$orders->create(array(
             'title' => 'Order test #'.rand(1,9999)
         ));
     }
@@ -74,15 +82,15 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
             'commission_payer' => Payers::CONSUMER
         );
         
-        $order = $this->orders->create($data);
+        $order = self::$orders->create($data);
 
         $this->assertEquals($order['title'], $data['title']);
         $this->assertEquals($order['order_description'], $data['order_description']);
         $this->assertEquals($order['cost'], $data['cost']);
         $this->assertEquals($order['commission_payer'], $data['commission_payer']);
         $this->assertEquals($order['state'], 'pending');
-        $this->assertEquals($order['owner_id'], $this->curUser['id']);
-        $this->assertEquals($order['supplier_id'], $this->curUser['id']);
+        $this->assertEquals($order['owner_id'], self::$curUser['id']);
+        $this->assertEquals($order['supplier_id'], self::$curUser['id']);
         $this->assertEquals($order['role'], Payers::SUPPLIER);
         
         return $order;
@@ -100,15 +108,15 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
             'title' => 'Order test #'.rand(1,9999),
             'order_description' => 'order description',
             'cost' => rand(10000, 100000),
-            'supplier_id' => $this->otherUser['id'],
-            'consumer_id' => $this->curUser['id'],
+            'supplier_id' => self::$otherUser['id'],
+            'consumer_id' => self::$curUser['id'],
             'commission_payer' => Payers::FIFTY_FIFTY
         );
         
-        $order = $this->orders->create($data);
+        $order = self::$orders->create($data);
         
-        $this->assertEquals($order['owner_id'], $this->curUser['id']);
-        $this->assertEquals($order['supplier_id'], $this->otherUser['id']);
+        $this->assertEquals($order['owner_id'], self::$curUser['id']);
+        $this->assertEquals($order['supplier_id'], self::$otherUser['id']);
         $this->assertEquals($order['role'], Payers::CONSUMER);
         
         return $order;
@@ -122,7 +130,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
      */
     public function calcComission()
     {
-        $calc = $this->orders->calcComission(1000000, Payers::FIFTY_FIFTY);
+        $calc = self::$orders->calcComission(1000000, Payers::CONSUMER);
         $this->assertArrayHasKey('cost', $calc);
     }
     
@@ -139,7 +147,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
             'commission_payer' => Payers::SUPPLIER
         );
         
-        $updated = $this->orders->editOrder($order['id'], $data);
+        $updated = self::$orders->editOrder($order['id'], $data);
         
         $this->assertEquals($order['id'], $updated['id']);
         $this->assertEquals($updated['commission_payer'], $data['commission_payer']);
@@ -155,7 +163,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
     public function getList($order)
     {
         $bFind = false;
-        $orders = $this->orders->getList();
+        $orders = self::$orders->getList();
         
         foreach ($orders as $arOrder) {
             if($arOrder['id'] == $order['id']) {
@@ -176,7 +184,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
      */
     public function getById($order)
     {
-        $finded = $this->orders->getById($order['id']);
+        $finded = self::$orders->getById($order['id']);
         $this->assertEquals($order['id'], $finded['id']);
     }
     
@@ -187,7 +195,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
      */
     public function getByIdWithoutId()
     {
-        $finded = $this->orders->getById(null);
+        $finded = self::$orders->getById(null);
         $this->assertFalse($finded);
     }
     
@@ -199,7 +207,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
      */
     public function getByIdWithUnexistedId()
     {
-        $finded = $this->orders->getById(-1);
+        $finded = self::$orders->getById(-1);
         $this->assertArrayHasKey('errors', $finded);
     }
     
@@ -219,11 +227,11 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
      */
     public function getInstancesInstance($order)
     {
-        $this->assertInstanceOf(Billing::class, $this->orders->getBilling($order['id']));
-        $this->assertInstanceOf(Changes::class, $this->orders->getChanges($order['id']));
-        $this->assertInstanceOf(Claims::class, $this->orders->getClaims($order['id']));
-        $this->assertInstanceOf(Payments::class, $this->orders->getPayments($order['id']));
-        $this->assertInstanceOf(Shipping::class, $this->orders->getShipping($order['id']));
-        $this->assertInstanceOf(Transitions::class, $this->orders->getTransitions($order['id']));
+        $this->assertInstanceOf(Billing::class, self::$orders->getBilling($order['id']));
+        $this->assertInstanceOf(Changes::class, self::$orders->getChanges($order['id']));
+        $this->assertInstanceOf(Claims::class, self::$orders->getClaims($order['id']));
+        $this->assertInstanceOf(Payments::class, self::$orders->getPayments($order['id']));
+        $this->assertInstanceOf(Shipping::class, self::$orders->getShipping($order['id']));
+        $this->assertInstanceOf(Transitions::class, self::$orders->getTransitions($order['id']));
     }
 }

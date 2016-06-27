@@ -13,33 +13,51 @@ use Safecrow\Enum\Payers;
 class PaymetsTest extends \PHPUnit_Framework_TestCase
 {
     private static
-        $logger
-    ;
-    
-    private
+        $logger,
         $payments,
         $supplierPayments
     ;
     
     /**
-     * @before
+     * @beforeClass
      */
-    public function createApp()
+    public static function createApp()
     {
         $app = new App();
-    
-        $user = $app->getUsers()->getByEmail("test596@test.ru");
-        $orders = $app->getOrders($user['id']);
-        $ordersList = $orders->getList();
         
-        foreach ($ordersList as $order) {
-            if($order['role'] == Payers::CONSUMER) {
-                $this->payments = $orders->getPayments($order['id']);
-            }
-            else {
-                $this->supplierPayments = $orders->getPayments($order['id']);
-            }
-        }
+        $userName = "test". rand(0, 10000);
+        $curUser = $app->getUsers()->reg(array(
+            'name' => $userName,
+            'email' => $userName."@test.ru",
+            'accepts_conditions' => true
+        ));
+        
+        $userName = "test". rand(0, 10000);
+        $otherUser = $app->getUsers()->reg(array(
+            'name' => $userName,
+            'email' => $userName."@test.ru",
+            'accepts_conditions' => true
+        ));
+        
+        $orders = $app->getOrders($curUser['id']);
+        $supOrder = $orders->create(array(
+            'title' => 'Order test #'.rand(1,9999),
+            'order_description' => 'order description',
+            'cost' => rand(10000, 100000),
+            'commission_payer' => Payers::CONSUMER
+        ));
+        
+        $conOrder = $orders->create(array(
+            'title' => 'Order test #'.rand(1,9999),
+            'order_description' => 'order description',
+            'cost' => rand(10000, 100000),
+            'supplier_id' => $otherUser['id'],
+            'consumer_id' => $curUser['id'],
+            'commission_payer' => Payers::FIFTY_FIFTY
+        ));
+
+        self::$payments = $orders->getPayments($conOrder['id']);
+        self::$supplierPayments = $orders->getPayments($supOrder['id']);
     
         self::$logger = new Logger('tests');
         self::$logger->pushHandler(new StreamHandler('Logs/payments.test.log', Logger::INFO));
@@ -53,7 +71,7 @@ class PaymetsTest extends \PHPUnit_Framework_TestCase
      */
     public function getInfo()
     {
-        $res = $this->payments->getInfo();
+        $res = self::$payments->getInfo();
         
         $this->assertArrayHasKey('consumer_pay', $res);
     }
@@ -66,7 +84,7 @@ class PaymetsTest extends \PHPUnit_Framework_TestCase
      */
     public function failCreateBill()
     {
-        $res = $this->supplierPayments->createBill("Ivanov Ivan");
+        $res = self::$supplierPayments->createBill("Ivanov Ivan");
         $this->assertArrayHasKey('errors', $res);
     }
     
@@ -78,7 +96,7 @@ class PaymetsTest extends \PHPUnit_Framework_TestCase
      */
     public function createBill()
     {
-        $res = $this->payments->createBill("Ivanov Ivan");
+        $res = self::$payments->createBill("Ivanov Ivan");
         $this->assertNotEmpty($res['id']);
         
         return $res;
@@ -93,7 +111,7 @@ class PaymetsTest extends \PHPUnit_Framework_TestCase
      */
     public function getBill($bill)
     {
-        $res = $this->payments->getBill();
+        $res = self::$payments->getBill();
         $this->assertEquals($res['id'], $bill['id']);
     }
     
@@ -105,7 +123,7 @@ class PaymetsTest extends \PHPUnit_Framework_TestCase
      */
     public function downloadInvoice()
     {
-        $res = $this->payments->downloadInvoice();
+        $res = self::$payments->downloadInvoice();
         self::$logger->info($res);
         $this->assertInternalType('string',$res);
     }

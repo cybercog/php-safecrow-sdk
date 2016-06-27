@@ -53,7 +53,7 @@ class App
     
     private function getSecret()
     {
-        return hash("sha256", $this->key.$this->secret.date('c'));
+        return $this->secret;
     }
     
     public function getHost()

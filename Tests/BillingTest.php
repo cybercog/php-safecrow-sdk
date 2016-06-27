@@ -7,6 +7,7 @@ use Monolog\Handler\StreamHandler;
 use Safecrow\Enum\PayerTypes;
 use Safecrow\Enum\PaymentTypes;
 use Safecrow\App;
+use Safecrow\Enum\Payers;
 
 /**
  * @backupGlobals
@@ -14,26 +15,34 @@ use Safecrow\App;
 class BillingTest extends \PHPUnit_Framework_TestCase
 {
     private static
-        $logger
-    ;
-
-    private
+        $logger,
         $billing
     ;
 
     /**
-     * @before
+     * @beforeClass
      */
-    public function createApp()
+    public static function createApp()
     {
         $app = new App();
-
-        $user = $app->getUsers()->getByEmail("test596@test.ru");
-        $orders = $app->getOrders($user['id']);
-        $ordersList = $orders->getList();
         
-        $this->billing = $orders->getBilling($ordersList[0]['id']);
-
+        $userName = "test". rand(0, 10000);
+        $user = $app->getUsers()->reg(array(
+            'name' => $userName,
+            'email' => $userName."@test.ru",
+            'accepts_conditions' => true
+        ));
+        
+        $orders = $app->getOrders($user['id']);
+        $order = $orders->create(array(
+            'title' => 'Order test #'.rand(1,9999),
+            'order_description' => 'order description',
+            'cost' => rand(10000, 100000),
+            'commission_payer' => Payers::CONSUMER
+        ));
+        
+        self::$billing = $orders->getBilling($order['id']);
+        
         self::$logger = new Logger('tests');
         self::$logger->pushHandler(new StreamHandler('Logs/billing.test.log', Logger::INFO));
     }
@@ -51,7 +60,7 @@ class BillingTest extends \PHPUnit_Framework_TestCase
             'holder_type' => PayerTypes::BUSINESS
         );
         
-        $this->billing->create($data);
+        self::$billing->create($data);
     }
     
     /**
@@ -72,7 +81,7 @@ class BillingTest extends \PHPUnit_Framework_TestCase
             )
         );
         
-        $this->billing->create($data);
+        self::$billing->create($data);
     }
     
     /**
@@ -93,7 +102,7 @@ class BillingTest extends \PHPUnit_Framework_TestCase
             )
         );
         
-        $this->billing->create($data);
+        self::$billing->create($data);
     }
     
     /**
@@ -114,7 +123,7 @@ class BillingTest extends \PHPUnit_Framework_TestCase
             )
         );
         
-        $res = $this->billing->create($data);
+        $res = self::$billing->create($data);
 
         $this->assertNotEmpty($res['id']);
         $this->assertEquals($res['holder_type'], $data['holder_type']);
@@ -140,7 +149,7 @@ class BillingTest extends \PHPUnit_Framework_TestCase
             )
         );
         
-        $res = $this->billing->create($data);
+        $res = self::$billing->create($data);
 
         $this->assertNotEmpty($res['id']);
         $this->assertEquals($res['holder_type'], $data['holder_type']);
@@ -167,7 +176,7 @@ class BillingTest extends \PHPUnit_Framework_TestCase
             )
         );
         
-        $res = $this->billing->create($data);
+        $res = self::$billing->create($data);
 
         $this->assertNotEmpty($res['id']);
         $this->assertEquals($res['holder_type'], $data['holder_type']);

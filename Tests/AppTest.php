@@ -43,8 +43,17 @@ class AppTest extends \PHPUnit_Framework_TestCase
      */
     public function getOrdersObject()
     {
+        $userName = "test". rand(0, 10000);
+        $userEmail = $userName."@test.ru";
+        
         $app = new App();
-        $this->assertInstanceOf(Orders::class, $app->getOrders(406));
+        $user = $app->getUsers()->reg(array(
+            'name' => $userName,
+            'email' => $userEmail,
+            'accepts_conditions' => true
+        ));
+
+        $this->assertInstanceOf(Orders::class, $app->getOrders($user['id']));
     }
     
     /**

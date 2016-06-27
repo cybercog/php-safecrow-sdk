@@ -10,6 +10,7 @@ use Safecrow\Enum\Payers;
 use Safecrow\Enum\PayerTypes;
 use Safecrow\Enum\PaymentTypes;
 use Safecrow\Enum\ClaimReasons;
+use Safecrow\Enum\ChangeTypes;
 
 /**
  * @backupGlobals
@@ -106,8 +107,8 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         //Ждем пока переведется статус
         while(true)
         {
-            sleep(120);
-            $order = $app->getOrders($consumer['id'])->getByID($order[id]);
+            sleep(10);
+            $order = $app->getOrders($consumer['id'])->getByID($order['id']);
             if($order['state'] == 'paid') {
                 break;
             }
@@ -124,12 +125,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         $transitionState = $app->getOrders($supplier['id'])->getTransitions($order['id'])->doTransition("shipping");
         self::$logger->info(print_r($transitionState,1));
         $this->assertEquals($transitionState, true);
-        
-        //Отправляем
-        $transitionState = $app->getOrders($supplier['id'])->getTransitions($order['id'])->doTransition("received");
-        self::$logger->info(print_r($transitionState,1));
-        $this->assertEquals($transitionState, true);
-        
+
         //Подтверждаем
         $transitionState = $app->getOrders($consumer['id'])->getTransitions($order['id'])->doTransition("received");
         self::$logger->info(print_r($transitionState,1));
@@ -213,8 +209,8 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         //Ждем пока переведется статус
         while(true)
         {
-            sleep(60);
-            $order = $app->getOrders($consumer['id'])->getByID($order[id]);
+            sleep(10);
+            $order = $app->getOrders($consumer['id'])->getByID($order['id']);
             if($order['state'] == 'paid') {
                 break;
             }
@@ -229,11 +225,6 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         
         //Передаем в доставку
         $transitionState = $app->getOrders($supplier['id'])->getTransitions($order['id'])->doTransition("shipping");
-        self::$logger->info(print_r($transitionState,1));
-        $this->assertEquals($transitionState, true);
-        
-        //Отправляем
-        $transitionState = $app->getOrders($supplier['id'])->getTransitions($order['id'])->doTransition("received");
         self::$logger->info(print_r($transitionState,1));
         $this->assertEquals($transitionState, true);
         
@@ -260,7 +251,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         self::$logger->info(print_r($changeState,1));
         
         //Оформляем возврат
-        $shipping = $app->getOrders($supplier['id'])->getShipping($order['id'])->create(array(
+        $shipping = $app->getOrders($consumer['id'])->getShipping($order['id'])->create(array(
             "company" => "Delivery Club"
         ), true);
         self::$logger->info(print_r($shipping,1));
@@ -271,7 +262,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($transitionState, true);
         
         //Товар возвращен
-        $transitionState = $app->getOrders($supplier['id'])->getTransitions($order['id'])->doTransition("returned");
+        $transitionState = $app->getOrders($consumer['id'])->getTransitions($order['id'])->doTransition("returned");
         self::$logger->info(print_r($transitionState,1));
         $this->assertEquals($transitionState, true);
         
