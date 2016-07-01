@@ -17,11 +17,10 @@ class AppTest extends \PHPUnit_Framework_TestCase
      */
     public function createApp()
     {
-        $host = Config::ENVIROMENT == "dev" ? Config::DEV_HOST : Config::PROD_HOST;
+        $app = new App(new Config("dev"));
         
-        $app = new App();
-        
-        $this->assertEquals($host, $app->getHost());
+        var_dump($app->getHost());
+        $this->assertEquals(Config::DEV_HOST, $app->getHost());
     }
     
     /**
@@ -32,7 +31,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
      */
     public function getUsersObject()
     {
-        $app = new App();
+        $app = new App(new Config("dev"));
         $this->assertInstanceOf(Users::class, $app->getUsers());
     }
     
@@ -46,7 +45,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
         $userName = "test". rand(0, 10000);
         $userEmail = $userName."@test.ru";
         
-        $app = new App();
+        $app = new App(new Config("dev"));
         $user = $app->getUsers()->reg(array(
             'name' => $userName,
             'email' => $userEmail,
@@ -64,7 +63,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
      */
     public function getOrdersWithoutUserId()
     {
-        $app = new App();
+        $app = new App(new Config("dev"));
         $app->getOrders(null);
     }
     
@@ -75,7 +74,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
      */
     public function getSubscriptions()
     {
-        $app = new App();
+        $app = new App(new Config("dev"));
         $this->assertInstanceOf(Subscriptions::class, $app->getSubscriptions());
     }
    
@@ -86,7 +85,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
      */
     public function testAllowedFiles()
     {
-        $app = new App();
+        $app = new App(new Config("dev"));
         
         $this->assertTrue(App::IsAllowedFileType("text/plain"));
         $this->assertFalse(App::IsAllowedFileType("text/xml"));

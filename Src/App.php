@@ -3,20 +3,19 @@ namespace Safecrow;
 
 use Safecrow\Http\Client;
 use Safecrow\Exceptions\AuthException;
+use Safecrow\Interfaces\IConfig;
 
 class App
 {
-    private 
+    private
+        $config,
         $sysClient,
-        $usrClient,
-        $key,
-        $secret
+        $usrClient
     ;
     
-    public function __construct()
+    public function __construct(IConfig $config)
     {
-        $this->key = Config::API_KEY;
-        $this->secret = Config::API_SECRET;
+        $this->config = $config;
         
         $this->sysClient = new Client($this->getKey(), $this->getSecret(), $this->getHost());
 
@@ -48,17 +47,17 @@ class App
     
     private function getKey()
     {
-        return $this->key;
+        return $this->config->getToken();
     }
     
     private function getSecret()
     {
-        return $this->secret;
+        return $this->config->getSecret();
     }
     
     public function getHost()
     {
-        return Config::ENVIROMENT == "dev" ? Config::DEV_HOST : Config::PROD_HOST;
+        return $this->config->getHost();
     }
     
     public static function IsAllowedFileType($type)

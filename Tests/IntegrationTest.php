@@ -11,6 +11,7 @@ use Safecrow\Enum\PayerTypes;
 use Safecrow\Enum\PaymentTypes;
 use Safecrow\Enum\ClaimReasons;
 use Safecrow\Enum\ChangeTypes;
+use Safecrow\Config;
 
 /**
  * @backupGlobals
@@ -37,7 +38,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
      */
     public function successDeal()
     {
-        $app = new App();
+        $app = new App(new Config("dev"));
         
         //Создание пользователей
         $supplier = $app->getUsers()->reg(array(
@@ -139,7 +140,7 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
      */
     public function dealWithShippingBack()
     {
-        $app = new App();
+        $app = new App(new Config("dev"));
         
         //Создание пользователей
         $supplier = $app->getUsers()->reg(array(

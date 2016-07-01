@@ -9,6 +9,7 @@ use Safecrow;
 use Safecrow\App;
 use Safecrow\Enum\PayerTypes;
 use Safecrow\Enum\Payers;
+use Safecrow\Config;
 
 class PaymetsTest extends \PHPUnit_Framework_TestCase
 {
@@ -23,7 +24,7 @@ class PaymetsTest extends \PHPUnit_Framework_TestCase
      */
     public static function createApp()
     {
-        $app = new App();
+        $app = new App(new Config("dev"));
         
         $userName = "test". rand(0, 10000);
         $curUser = $app->getUsers()->reg(array(
