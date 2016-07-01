@@ -1,6 +1,7 @@
 #Safecrow SDK#
   
 Реализация основных методов API для интеграции с сервисом [Safecrow](https://www.safecrow.ru/)
+Документация доступна по [ссылке](http://safecrow.mgnexus.ru/docs/)
   
 ##Установка##
   

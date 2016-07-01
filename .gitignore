@@ -1,5 +1,6 @@
 /vendor/
 /Logs/
+/docs/
 /test.php
 /composer.lock
 /composer.phar
