@@ -8,6 +8,13 @@
         }
     ],
     "require": {
-        "phpunit/phpunit": "^5.3"
+        "phpunit/phpunit": "^4.8",
+        "monolog/monolog": "^1.19"
+    },
+    "autoload": {
+        "psr-4": {
+            "Safecrow\\": "Src",
+            "Safecrow\\Tests\\": "Tests"
+        }
     }
 }
