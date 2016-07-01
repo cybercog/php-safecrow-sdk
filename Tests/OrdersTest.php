@@ -10,6 +10,7 @@ use Safecrow\Payments;
 use Safecrow\Shipping;
 use Safecrow\Transitions;
 use Safecrow\App;
+use Safecrow\Config;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
@@ -31,7 +32,7 @@ class OrdersTest extends \PHPUnit_Framework_TestCase
      */
     public static function createApp()
     {
-        $app = new App();
+        $app = new App(new Config("dev"));
         
         $userName = "test". rand(0, 10000);
         self::$curUser = $app->getUsers()->reg(array(

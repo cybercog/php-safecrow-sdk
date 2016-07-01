@@ -24,7 +24,7 @@ class SubscriptionsTest extends \PHPUnit_Framework_TestCase
      */
     public function createApp()
     {
-        $app = new App();
+        $app = new App(new Config("dev"));
     
         $this->subscriptions = $app->getSubscriptions();
     

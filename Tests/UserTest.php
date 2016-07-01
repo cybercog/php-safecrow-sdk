@@ -8,6 +8,7 @@ use Safecrow\Exceptions\RegistrationException;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use Safecrow\Config;
 
 class UserTest extends \PHPUnit_Framework_TestCase
 {
@@ -25,7 +26,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         self::$userName = "test". rand(0, 10000);
         self::$userEmail = self::$userName."@test.ru";
-        self::$userPhone = "8".rand(9000000000, 9999999999);
+        self::$userPhone = "7".rand(9000000000, 9999999999);
         
         self::$logger = new Logger('tests');
         self::$logger->pushHandler(new StreamHandler('Logs/user.test.log', Logger::INFO));
@@ -39,7 +40,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function regUserWithEmail()
     {
-        $app = new App();
+        $app = new App(new Config("dev"));
         
         $user = $app->getUsers()->reg(array(
             'name' => self::$userName,
@@ -61,7 +62,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function regUserWithPhone()
     {
-        $app = new App();
+        $app = new App(new Config("dev"));
         
         $user = $app->getUsers()->reg(array(
             'name' => self::$userName,
@@ -84,7 +85,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function regUserWithoutEmailAndPhone()
     {
-        $app = new App();
+        $app = new App(new Config("dev"));
         
         $app->getUsers()->reg(array(
             'accepts_conditions' => true
@@ -100,7 +101,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function regUserWithoutReqFields()
     {
-        $app = new App();
+        $app = new App(new Config("dev"));
         
         $app->getUsers()->reg(array(
             'name' => self::$userName
@@ -115,7 +116,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function authUnsuccess()
     {
-        $app = new App();
+        $app = new App(new Config("dev"));
         
         $res = $app->getUsers()->auth(1);
         $this->assertArrayHasKey("errors", $res);
@@ -130,7 +131,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function authSuccess($user)
     {
-        $app = new App();
+        $app = new App(new Config("dev"));
         
         $res = $app->getUsers()->auth($user['id']);
         $this->assertArrayHasKey("access_token",$res);
@@ -149,7 +150,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function getUserAccessToken($data)
     {
-        $app = new App(); 
+        $app = new App(new Config("dev"));
         $this->assertNotEmpty($app->getUsers()->getUserToken($data['user']['id']));
     }
     
@@ -162,7 +163,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function findUserByPhone($user)
     {
-        $app = new App();
+        $app = new App(new Config("dev"));
         
         $finded = $app->getUsers()->getByPhone($user['phone']);
         
@@ -183,7 +184,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function findUserByEmail($user)
     {
-        $app = new App();
+        $app = new App(new Config("dev"));
         
         $finded = $app->getUsers()->getByEmail($user['email']);
         
@@ -203,7 +204,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function searchUserByEmptyEmail()
     {
-        $app = new App();
+        $app = new App(new Config("dev"));
         
         $user = $app->getUsers()->getByEmail("");
         $this->assertFalse($user);
@@ -217,7 +218,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function searchUserByEmptyPhone()
     {
-        $app = new App();
+        $app = new App(new Config("dev"));
         
         $user = $app->getUsers()->getByPhone("");
         $this->assertFalse($user);
@@ -231,7 +232,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function searchUserByIncorrectEmail()
     {
-        $app = new App();
+        $app = new App(new Config("dev"));
         
         $user = $app->getUsers()->getByEmail("incorrect_email");
         $this->assertFalse($user);
@@ -245,7 +246,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function searchUserByEmailFail()
     {
-        $app = new App();
+        $app = new App(new Config("dev"));
         
         $user = $app->getUsers()->getByEmail("durov@vk.com");
         $this->assertArrayHasKey("errors", $user);
@@ -259,7 +260,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function searchUserByPhoneFail()
     {
-        $app = new App();
+        $app = new App(new Config("dev"));
         
         $user = $app->getUsers()->getByPhone("19001234567");
         $this->assertArrayHasKey("errors", $user);
