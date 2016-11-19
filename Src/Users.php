@@ -28,8 +28,8 @@ class Users
     {
         $this->validate($params);
         $res = $this->getClient()->post("/sessions/register_user", $params);
-        
-        return $res['user'] ?: $res;
+
+        return isset($res['user']) ? $res['user'] : $res;
     }
     
     /**
