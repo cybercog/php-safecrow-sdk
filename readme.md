@@ -1,4 +1,4 @@
-#Safecrow SDK#
+# Safecrow SDK
 
 Реализация основных методов API для интеграции с сервисом [Safecrow](https://www.safecrow.ru/)  
 
@@ -6,20 +6,21 @@ PHPDoc [https://safecrow.github.io/safecrow-php-sdk/](https://safecrow.github.io
 
 Документация к API [https://safecrow.atlassian.net/wiki/display/CLIEN/V1](https://safecrow.atlassian.net/wiki/display/CLIEN/V1)
 
-##Установка##
+## Установка
 
 ```
 composer require mgn/safecrow-sdk
 ```
 
+## Релизы
 
-##Релизы##
 - 1.0.1 - Передача настроек приложения через объект реализующий интерфейс IConfig
 - 1.0.0 - Реализация основных методов
 
-##Использования##
+## Использования
 
-###Конфигурация приложения###
+### Конфигурация приложения
+
 ```php
 use Safecrow\Config;
 
@@ -28,21 +29,22 @@ $config = new Config();
 
 Класс Config реализует интерфейс IConfig.
 
+### Создание приложения
 
-###Создание приложения###
 ```php
 $app = new App($config);
 ```
 
+### Использование
 
-###Использование###
+#### Подписка на обновления
 
-Подписка на обновления
 ```php
 $app->getSubscriptions()->subscribe("http://safecrow.mgnexus.ru/subscription", array("paid"));
 ```
 
-Регистрация пользователя
+#### Регистрация пользователя
+
 ```php
 $user = $app->getUsers()->reg(array(
     'name' => $userName,
@@ -51,7 +53,8 @@ $user = $app->getUsers()->reg(array(
 ));
 ```
 
-Создание заказа
+#### Создание заказа
+
 ```php
 $order = $app->getOrders($userId)->create(array(
     'title' => 'Order test #9999',
